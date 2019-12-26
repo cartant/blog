@@ -13,7 +13,7 @@ This article looks at the `unsubscribe` method of `Subject` — and its deri
 
 ## Subscriptions
 
-If you look at the signature for [`Observable.prototype.subscribe`](https://github.com/ReactiveX/rxjs/blob/5.5.6/src/Observable.ts#L76-L77), you’ll see that it returns a `Subscription`. And if you’ve used observables, you will be familiar with calling the subscription’s `unsubscribe` method. However, a subscription contains more than just the `unsubscribe` method.
+If you look at the signature for [`Observable.prototype.subscribe`](https://github.com/ReactiveX/rxjs/blob/6.5.3/src/internal/Observable.ts#L73-L80), you’ll see that it returns a `Subscription`. And if you’ve used observables, you will be familiar with calling the subscription’s `unsubscribe` method. However, a subscription contains more than just the `unsubscribe` method.
 
 In particular, the `Subscription` class implements the `SubscriptionLike` interface:
 
@@ -41,9 +41,8 @@ It’s possible to create a `Subscriber` instance and pass it in a `subscribe` c
 It’s also possible to pass the instance in more than one `subscribe` call and calling `unsubscribe` on the `Subscriber` will unsubscribe it from all observables to which it is subscribed and mark it as closed. Here, calling `unsubscribe` will unsubscribe it from both `one` and `two`:
 
 ```ts
-import { interval } from "rxjs/observable/interval";
+import { interval, Subscriber } from "rxjs";
 import { map } from "rxjs/operators";
-import { Subscriber } from "rxjs/Subscriber";
 
 const one = interval(1000).pipe(map(value => `one(${value})`));
 const two = interval(2000).pipe(map(value => `two(${value})`));
@@ -63,9 +62,8 @@ A subject is both an observer and an observable. The `Subject` class extends the
 Its implementation of `SubscriptionLike` suggests that — as with a `Subscriber` — it ought to be possible to subscribe and unsubscribe a `Subject`, like this:
 
 ```ts
-import { interval } from "rxjs/observable/interval";
+import { interval, Subject } from "rxjs";
 import { map } from "rxjs/operators";
-import { Subject } from "rxjs/Subject";
 
 const one = interval(1000).pipe(map(value => `one(${value})`));
 const two = interval(2000).pipe(map(value => `two(${value})`));
