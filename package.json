@@ -20,7 +20,7 @@
     }
   },
   "keywords": [],
-  "license": "",
+  "license": "All Rights Reserved",
   "lint-staged": {
     "*.{js,jsx,json,md}": [
       "prettier --write",
