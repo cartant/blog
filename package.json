@@ -1,0 +1,46 @@
+{
+  "author": "Nicholas Jamieson <nicholas@cartant.com>",
+  "bugs": {
+    "url": "https://github.com/cartant/blog/issues"
+  },
+  "dependencies": {
+    "husky": "^3.1.0",
+    "lint-staged": "^9.5.0",
+    "prettier": "^1.19.1",
+    "remark-cli": "^7.0.1",
+    "remark-lint": "^6.0.5",
+    "remark-lint-fenced-code-flag": "^1.0.3"
+  },
+  "description": "Personal blog posts",
+  "devDependencies": {},
+  "homepage": "https://ncjamieson.com",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "keywords": [],
+  "license": "",
+  "lint-staged": {
+    "*.{js,jsx,json,md}": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.md": [
+      "remark",
+      "git add"
+    ]
+  },
+  "main": "none",
+  "name": "blog",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cartant/blog.git"
+  },
+  "scripts": {
+    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
+    "lint": "prettier --check \"**/*.{js,jsx,json,md}\" && remark \"content/**/*.md\""
+  },
+  "version": "0.0.0"
+}
