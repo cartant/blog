@@ -18,8 +18,7 @@ Let’s look at an example that involves an expensive call to a backend service:
 Here’s the [NgRx](https://github.com/ngrx/platform) effect:
 
 ```ts
-@Effect()
-public findAddresses = this.actions.pipe(
+public findAddresses = createEffect(() => this.actions$.pipe(
   ofType(LocationActionTypes.FindAddresses),
   map(action => action.partialAddress),
   debounceTime(400),
@@ -31,7 +30,7 @@ public findAddresses = this.actions.pipe(
       catchError(error => of(new FindAddressesRejected(error)))
     )
   )
-);
+));
 ```
 
 And here’s the [`redux-observable`](https://github.com/redux-observable/redux-observable) epic:
