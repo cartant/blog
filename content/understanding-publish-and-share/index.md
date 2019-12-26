@@ -13,7 +13,7 @@ I’m often asked questions that relate to the `publish` operator:
 
 > What’s the difference between publish and share?
 >
-> How do I import the refCount operator?
+> How do I use the refCount operator?
 >
 > When should I use an AsyncSubject?
 
@@ -25,8 +25,8 @@ Multicasting is the term used to describe the situation in which each notificati
 
 Hot and cold observables are characterised by where the producer of the observable’s notifications is created. In his article [_Hot vs. Cold Observables_](https://medium.com/@benlesh/hot-vs-cold-observables-f8094ed53339)_,_ Ben Lesh discusses the differences in detail, and the differences can be summarised as follows:
 
-- An observable is cold if the producer of its notifications is created whenever an observer subscribes to the observable. For example, a [`timer`](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#static-method-timer) observable is cold; each time a subscription is made, a new timer is created.
-- An observable is hot if the producer of its notifications is not created each time an observer subscribes to the observable. For example, an observable created using [`fromEvent`](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#static-method-fromEvent) is hot; the element that produces the events exists in the DOM — it’s not created when the observer is subscribed.
+- An observable is cold if the producer of its notifications is created whenever an observer subscribes to the observable. For example, a [`timer`](https://rxjs.dev/api/index/function/timer) observable is cold; each time a subscription is made, a new timer is created.
+- An observable is hot if the producer of its notifications is not created each time an observer subscribes to the observable. For example, an observable created using [`fromEvent`](https://rxjs.dev/api/index/function/fromEvent) is hot; the element that produces the events exists in the DOM — it’s not created when the observer is subscribed.
 
 Cold observables are unicast, as each observer receives notifications from the producer that was created when the observer subscribed.
 
@@ -41,21 +41,9 @@ A subject is both an observable and an observer. By subscribing observers to a s
 Let’s look at an example:
 
 ```ts
-import { Observable } from "rxjs/Observable";
-import { Subject } from "rxjs/Subject";
-import "rxjs/add/observable/defer";
-import "rxjs/add/observable/of";
+import { defer, Observable, of, Subject } from "rxjs";
 
-const source = Observable.defer(() =>
-  Observable.of(Math.floor(Math.random() * 100))
-);
-
-function observer(name: string) {
-  return {
-    next: (value: number) => console.log(`observer ${name}: ${value}`),
-    complete: () => console.log(`observer ${name}: complete`),
-  };
-}
+const source = defer(() => of(Math.floor(Math.random() * 100)));
 
 const subject = new Subject<number>();
 subject.subscribe(observer("a"));
@@ -63,7 +51,18 @@ subject.subscribe(observer("b"));
 source.subscribe(subject);
 ```
 
-The source in the example is cold. Each time an observer subscribes to the source, the factory function passed to [`defer`](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#static-method-defer) will create an observable that emits a random number and then completes.
+_The examples in this article use the following utility function to create named observers:_
+
+```ts
+function observer(name: string) {
+  return {
+    next: (value: number) => console.log(`observer ${name}: ${value}`),
+    complete: () => console.log(`observer ${name}: complete`),
+  };
+}
+```
+
+The source in the example is cold. Each time an observer subscribes to the source, the factory function passed to [`defer`](https://rxjs.dev/api/index/function/defer) will create an observable that emits a random number and then completes.
 
 To multicast the source, the observers are subscribed to the subject, and the subject is then subscribed to the source. The source will see only one subscription, will produce only one `next` notification — containing the random number — and will produce only one `complete` notification. The subject will send those notifications to its observers and the output will look something like this:
 
@@ -78,11 +77,13 @@ The example can be used as a basic mental model for RxJS multicasting: a source 
 
 ## The multicast operator and connectable observables
 
-RxJS includes a [`multicast`](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-multicast) operator that can be applied to an observable to make it hot. The operator encapsulates the infrastructure that’s involved when a subject is used to multicast an observable.
+RxJS includes a [`multicast`](https://rxjs.dev/api/operators/multicast) operator that can be applied to an observable to make it hot. The operator encapsulates the infrastructure that’s involved when a subject is used to multicast an observable.
 
 Before looking at the `multicast` operator, let’s replace the subject in the above example with a naive implementation of a `multicast` function:
 
 ```ts
+import { Observable, Subject } from "rxjs";
+
 function multicast<T>(source: Observable<T>) {
   const subject = new Subject<T>();
   source.subscribe(subject);
@@ -103,31 +104,21 @@ observer b: complete
 
 Which isn’t what’s wanted. Subscribing the subject inside the function sees the subject receive the `next` and `complete` notifications before the observers are subscribed — so the observers receive only a `complete` notification.
 
-For this to be avoidable, the caller of any function that connects the multicasting infrastructure needs to be able to control when the subject subscribes to the source. RxJS’s `multicast` operator enables this by returning a special type of observable: a [`ConnectableObservable`](http://reactivex.io/rxjs/class/es6/observable/ConnectableObservable.js~ConnectableObservable.html).
+For this to be avoidable, the caller of any function that connects the multicasting infrastructure needs to be able to control when the subject subscribes to the source. RxJS’s `multicast` operator enables this by returning a special type of observable: a [`ConnectableObservable`](https://rxjs.dev/api/index/class/ConnectableObservable).
 
 A connectable observable encapsulates the multicasting infrastructure, but does not immediately subscribe to the source. It subscribes to the source when its `connect` method is called.
 
 Let’s change the example to use the `multicast` operator:
 
 ```ts
-import { Observable } from "rxjs/Observable";
-import { Subject } from "rxjs/Subject";
-import "rxjs/add/observable/defer";
-import "rxjs/add/observable/of";
-import "rxjs/add/operator/multicast";
+import { defer, Observable, of, Subject } from "rxjs";
+import { multicast } from "rxjs/operators;
 
-const source = Observable.defer(() =>
-  Observable.of(Math.floor(Math.random() * 100))
+const source = defer(() =>
+  of(Math.floor(Math.random() * 100))
 );
 
-function observer(name: string) {
-  return {
-    next: (value: number) => console.log(`observer ${name}: ${value}`),
-    complete: () => console.log(`observer ${name}: complete`),
-  };
-}
-
-const m = source.multicast(new Subject<number>());
+const m = source.pipe(multicast(new Subject<number>()));
 m.subscribe(observer("a"));
 m.subscribe(observer("b"));
 m.connect();
@@ -144,16 +135,16 @@ observer b: complete
 
 When `connect` is called, the subject passed to the `multicast` operator is subscribed to the source and the subject’s observers receive the multicast notifications — which fits our basic mental model of RxJS multicasting.
 
-Connectable observables have another method that can be used to determine when subscriptions to the source are made: the `refCount` method.
+Connectable observables have another mechanism that can be used to determine when subscriptions to the source are made: the `refCount` operator.
 
-`refCount` looks like an operator — that is, it’s a method that’s called on an observable that returns another observable — but it’s a `ConnectableObservable` method and does not need to be imported. As its name suggests, `refCount` returns an observable that maintains a reference count of the subscriptions that have been made.
+`refCount` is a special operator: it can only be applied to a `ConnectableObservable`. As its name suggests, `refCount` returns an observable that maintains a reference count of the subscriptions that have been made.
 
 When an observer is subscribed to the reference-counted observable, the reference count is incremented and if the prior reference count was zero, the multicasting infrastructure’s subject is subscribed to the source observable. And when an observer is unsubscribed, the reference count is decremented and if the reference count drops to zero, the subject is unsubscribed from the source.
 
-Let’s change the example to use `refCount`:
+Let’s change the example to use the `refCount` operator:
 
 ```ts
-const m = source.multicast(new Subject<number>()).refCount();
+const m = source.pipe(multicast(new Subject<number>()), refCount());
 m.subscribe(observer("a"));
 m.subscribe(observer("b"));
 ```
@@ -175,7 +166,10 @@ When the second observer subscribes, the subject is again subscribed to the sour
 Passing a subject factory function to `multicast` will solve the problem:
 
 ```ts
-const m = source.multicast(() => new Subject<number>()).refCount();
+const m = source.pipe(
+  multicast(() => new Subject<number>()),
+  refCount()
+);
 m.subscribe(observer("a"));
 m.subscribe(observer("b"));
 ```
@@ -192,16 +186,7 @@ observer b: complete
 Because the source observable emits its notifications immediately, the observers receive separate notifications. If the source is modified so that the notifications are delayed:
 
 ```ts
-import { Observable } from "rxjs/Observable";
-import { Subject } from "rxjs/Subject";
-import "rxjs/add/observable/defer";
-import "rxjs/add/observable/of";
-import "rxjs/add/operator/delay";
-import "rxjs/add/operator/multicast";
-
-const source = Observable.defer(() =>
-  Observable.of(Math.floor(Math.random() * 100))
-).delay(0);
+const source = defer(() => of(Math.floor(Math.random() * 100)).pipe(delay(0)));
 ```
 
 The observers will receive multicast notifications and the output will look something like this:
@@ -217,8 +202,8 @@ To summarise, the examples have shown that the `multicast` operator:
 
 - encapsulates multicasting that fits our mental model;
 - provides a `connect` method that can be used to determine when the subscription to the source is made;
-- provides a `refCount` method that can be used to automatically manage subscriptions to the source observable; and
-- if `refCount` is used, a subject factory function must be specified — instead of a `Subject` instance.
+- supports a `refCount` operator that can be used to automatically manage subscriptions to the source observable; and
+- if `refCount` is used, a subject factory function should be specified — instead of a `Subject` instance.
 
 Let’s now look at the `publish` and `share` operators — and their variants — to see how they build upon what the `multicast` operator provides.
 
@@ -227,30 +212,19 @@ Let’s now look at the `publish` and `share` operators — and their varian
 Let’s use the following example to look at the `publish` operator:
 
 ```ts
-import { Observable } from "rxjs/Observable";
-import "rxjs/add/observable/concat";
-import "rxjs/add/observable/defer";
-import "rxjs/add/observable/of";
-import "rxjs/add/operator/delay";
-import "rxjs/add/operator/publish";
+import { concat, defer, Observable, of } from "rxjs";
+import { delay, publish } from "rxjs/operators";
 
 function random() {
   return Math.floor(Math.random() * 100);
 }
 
-const source = Observable.concat(
-  Observable.defer(() => Observable.of(random())),
-  Observable.defer(() => Observable.of(random())).delay(1)
+const source = concat(
+  defer(() => of(random())),
+  defer(() => of(random())).pipe(delay(1))
 );
 
-function observer(name: string) {
-  return {
-    next: (value: number) => console.log(`observer ${name}: ${value}`),
-    complete: () => console.log(`observer ${name}: complete`),
-  };
-}
-
-const p = source.publish();
+const p = source.pipe(publish());
 p.subscribe(observer("a"));
 p.connect();
 p.subscribe(observer("b"));
@@ -281,7 +255,7 @@ The notifications received by the observables can be summarised as follows:
 If the example is changed to use `refCount` instead of `connect`:
 
 ```ts
-const p = source.publish().refCount();
+const p = source.pipe(publish(), refCount());
 p.subscribe(observer("a"));
 p.subscribe(observer("b"));
 setTimeout(() => p.subscribe(observer("c")), 10);
@@ -325,8 +299,8 @@ Instead of passing a `Subject` to `multicast`, `publishBehavior` passes a `Behav
 Let’s change the example to briefly delay the random-number-generating source so that it does not immediately emit a random number:
 
 ```ts
-const delayed = Observable.timer(1).switchMapTo(source);
-const p = delayed.publishBehavior(-1);
+const delayed = timer(1).pipe(switchMapTo(source));
+const p = delayed.pipe(publishBehavior(-1));
 p.subscribe(observer("a"));
 p.connect();
 p.subscribe(observer("b"));
@@ -358,7 +332,7 @@ The notifications received by the observables can be summarised as follows:
 Instead of passing a `Subject` to `multicast`, `publishReplay` passes a `ReplaySubject`. As its name suggests, a `ReplaySubject` will replay the specified number of `next` notifications whenever an observer subscribes.
 
 ```ts
-const p = source.publishReplay(1);
+const p = source.pipe(publishReplay(1));
 p.subscribe(observer("a"));
 p.connect();
 p.subscribe(observer("b"));
@@ -384,14 +358,14 @@ The notifications received by the observables can be summarised as follows:
 - `b` subscribes after the `connect` call, at which stage the subject has received the first `next` notification from the source, so `b` receives the replayed `next` notification, the source’s second `next` notification and the `complete` notification;
 - `c` subscribes after the source observable has completed, so it receives a replayed `next` notification and a`complete` notification.
 
-Looking at the behaviour of observable `c`, it’s clear that — unlike the `publish` operator — the `publishReplay` operator is suited for use with the `refCount` method, as observers subscribing after the source completes will receive the any replayed `next` notifications.
+Looking at the behaviour of observable `c`, it’s clear that — unlike the `publish` operator — the `publishReplay` operator is suited for use with the `refCount` operator, as observers subscribing after the source completes will receive the replayed `next` notifications.
 
 ## The publishLast operator
 
 Instead of passing a `Subject` to `multicast`, `publishLast` passes an `AsyncSubject`. The `AsyncSubject` is the most unusual of the specialised subjects. It does not emit a `next` notification until it completes, at which time it emits the last `next` notification it received from the source observable — if it has received one — and a `complete` notification.
 
 ```ts
-const p = source.publishLast();
+const p = source.pipe(publishLast());
 p.subscribe(observer("a"));
 p.connect();
 p.subscribe(observer("b"));
@@ -414,16 +388,16 @@ The notifications received by the observables can be summarised as follows:
 - `a` and `b` subscribe before the source completes, but receive no notifications until the source has completed, at which time they receive a `next` notification containing the second random number and a `complete` notification.
 - `c` subscribes after the source has completed and it, too, receives a `next` notification containing the second random number and a `complete` notification.
 
-Like `publishReplay`, the `publishLast` operator is suited for use with the `refCount` method, as observers subscribing after the source completes will receive the last `next` notification.
+Like `publishReplay`, the `publishLast` operator is suited for use with the `refCount` operator, as observers subscribing after the source completes will receive the last `next` notification.
 
 ## The share operator
 
-The `share` operator is similar to using the `publish` operator and calling `refCount`. However, `share` passes a factory function to `multicast`, which means that when a subscription is made after the reference count drops to zero, a new `Subject` will be created and subscribed to the source observable.
+The `share` operator is similar to using the `publish` and `refCount` operators. However, `share` passes a factory function to `multicast`, which means that when a subscription is made after the reference count drops to zero, a new `Subject` will be created and subscribed to the source observable.
 
 The use of a factory function makes observables composed using `share` retry-able: if an error occurs, any subscribers are unsubscribed and the reference count drops to zero. If retried, re-subscription will see a new `Subject` created which will subscribe to the source. With observables composed using `publish`, this will not happen: the `Subject` will simply re-emit the error notification.
 
 ```ts
-const s = source.share();
+const s = source.pipe(share());
 s.subscribe(observer("a"));
 s.subscribe(observer("b"));
 setTimeout(() => s.subscribe(observer("c")), 10);
@@ -457,4 +431,8 @@ And that’s it; we’re at the end. We’ve looked at six operators, but they a
 
 ---
 
-This article looked briefly at the `refCount` method. For a more in-depth look, see [_RxJS: How to Use refCount_](/how-to-use-refcount/).
+This article looked briefly at the `refCount` operator. For a more in-depth look, see [_RxJS: How to Use refCount_](/how-to-use-refcount/).
+
+---
+
+_This article was updated — in December, 2019 — to use RxJS-version-6 examples, etc._

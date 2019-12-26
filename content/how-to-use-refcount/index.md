@@ -1,6 +1,6 @@
 ---
 title: "RxJS: How to Use refCount"
-description: An in-depth look at the refCount method
+description: An in-depth look at the refCount operator
 date: "2017-09-03T11:23:11.086Z"
 categories: []
 keywords: []
@@ -9,15 +9,15 @@ slug: /@cartant/rxjs-how-to-use-refcount-73a0c6619a4e
 
 ![Table numbers](title.jpeg "Photo by Mike Wilson on Unsplash")
 
-My previous article — [_Understanding the publish and share Operators_](/understanding-publish-and-share/) — looked only briefly at the `refCount` method. Let’s look at it more closely here.
+My previous article — [_Understanding the publish and share Operators_](/understanding-publish-and-share/) — looked only briefly at the `refCount` operator. Let’s look at it more closely here.
 
 ## What does refCount do?
 
-To recap, the basic mental model for multicasting in RxJS involves: a source observable; a subject subscribed to the source; and multiple observers subscribed to the subject. The [`multicast`](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-multicast) operator encapsulates the subject-based infrastructure and returns a `ConnectableObservable` — upon which either the `connect` or `refCount` method can be called.
+To recap, the basic mental model for multicasting in RxJS involves: a source observable; a subject subscribed to the source; and multiple observers subscribed to the subject. The [`multicast`](https://rxjs.dev/api/operators/multicast) operator encapsulates the subject-based infrastructure and returns a [`ConnectableObservable`](https://rxjs.dev/api/index/class/ConnectableObservable) — upon which `connect` can be called.
 
 As its name suggests, `refCount` returns an observable that maintains a reference count of subscribers.
 
-When an observer is subscribed to the reference-counted observable, the reference count is incremented and if the prior reference count was zero, the multicasting infrastructure’s subject is subscribed to the source observable. And when an observer is unsubscribed, the reference count is decremented and if the reference count drops to zero, the subject is unsubscribed from the source.
+When an observer subscribes to the reference-counted observable, the reference count is incremented and if the prior reference count was zero, the multicasting infrastructure’s subject subscribes to the source observable. When an observer unsubscribes, the reference count is decremented and if the reference count drops to zero, the subject unsubscribes from the source.
 
 This reference counting behaviour can be used in two ways:
 
@@ -33,21 +33,27 @@ The `publish` operator returns a connectable observable. Calling `connect` on th
 Let’s look at an example in which the observers take a single value — and then unsubscribe (implicitly) from the published observable:
 
 ```ts
-const source = instrument(Observable.interval(100));
-const published = source.publish();
-const a = published.take(1).subscribe(observer("a"));
-const b = published.take(1).subscribe(observer("b"));
+import { ConnectableObservable, interval } from "rxjs";
+import { publish, take } from "rxjs/operators";
+
+const source = instrument(interval(100));
+const published = source.pipe(publish()) as ConnectableObservable<number>;
+const a = published.pipe(take(1)).subscribe(observer("a"));
+const b = published.pipe(take(1)).subscribe(observer("b"));
 const subscription = published.connect();
 ```
 
-The examples in this article use the following utility functions to instrument the source observables with logging and to create named observers:
+_The examples in this article use the following utility functions to instrument the source observables with logging and to create named observers:_
 
 ```ts
+import { Observable } from "rxjs";
+import { tap } from "rxjs/operators";
+
 function instrument<T>(source: Observable<T>) {
   return new Observable<T>(observer => {
     console.log("source: subscribing");
     const subscription = source
-      .do(value => console.log(`source: ${value}`))
+      .pipe(tap(value => console.log(`source: ${value}`)))
       .subscribe(observer);
     return () => {
       subscription.unsubscribe();
@@ -84,10 +90,13 @@ The two observers each take a single value and then complete — unsubscribi
 Instead of having to decide when to perform an explicit unsubscription, `refCount` could be used:
 
 ```ts
-const source = instrument(Observable.interval(100));
-const counted = source.publish().refCount();
-const a = counted.take(1).subscribe(observer("a"));
-const b = counted.take(1).subscribe(observer("b"));
+import { interval } from "rxjs";
+import { publish, refCount, take } from "rxjs/operators";
+
+const source = instrument(interval(100));
+const counted = source.pipe(publish(), refCount());
+const a = counted.pipe(take(1)).subscribe(observer("a"));
+const b = counted.pipe(take(1)).subscribe(observer("b"));
 ```
 
 With the observers subscribed to the reference counted observable, the multicasting infrastructure’s subject will be unsubscribed from the source observable when the reference count drops to zero and the example’s output will be:
@@ -109,8 +118,11 @@ In addition to unsubscribing from the source observable when the reference count
 Let’s look at what this means when used with a source observable that completes, using this example:
 
 ```ts
-const source = instrument(Observable.timer(100));
-const counted = source.publish().refCount();
+import { timer } from "rxjs";
+import { publish, refCount } from "rxjs/operators";
+
+const source = instrument(timer(100));
+const counted = source.pipe(publish(), refCount());
 const a = counted.subscribe(observer("a"));
 setTimeout(() => a.unsubscribe(), 110);
 setTimeout(() => counted.subscribe(observer("b")), 120);
@@ -177,7 +189,7 @@ To summarise, from examples we can see that with `publish` and its variants:
 
 - when a source observable completes, the multicasting infrastructure’s subject will complete, too, and this will prevent re-subscription to the source;
 - when using `refCount` with `publish` and `publishBehavior`, late subscribers will receive only a `complete` notification — which is unlikely to be what’s wanted;
-- when using `refCount` with `publishReplay` and `publishLast`, late subscribers will receive the expected notifications.
+- when using `refCount` with `publishReplay` and `publishLast`, late subscribers will receive the expected `next` notifications.
 
 ## Re-subscribing to observables that do not complete
 
@@ -186,8 +198,11 @@ We’ve seen what happens when re-subscribing to a source observable that comple
 Instead, of a `timer` observable, this example uses an `interval` observable — which will repeatedly emit `next` notifications containing a incremented number at the specified interval:
 
 ```ts
-const source = instrument(Observable.interval(100));
-const counted = source.publish().refCount();
+import { interval } from "rxjs";
+import { publish, refCount } from "rxjs/operators";
+
+const source = instrument(interval(100));
+const counted = source.pipe(publish(), refCount());
 const a = counted.subscribe(observer("a"));
 setTimeout(() => a.unsubscribe(), 110);
 setTimeout(() => counted.subscribe(observer("b")), 120);
@@ -251,13 +266,13 @@ To summarise, from the examples we can see that when using `refCount` with sourc
 
 ## What does shareReplay do?
 
-In RxJS version [5.4.0](https://github.com/ReactiveX/rxjs/blob/master/CHANGELOG.md#540-2017-05-09), the [`shareReplay`](https://github.com/ReactiveX/rxjs/blob/5.4.3/src/operator/shareReplay.ts#L7-L26) operator was introduced. It is very similar to `publishReplay().refCount()`, but has one subtle difference.
+In RxJS version [5.4.0](https://github.com/ReactiveX/rxjs/blob/master/CHANGELOG.md#540-2017-05-09), the [`shareReplay`](https://github.com/ReactiveX/rxjs/blob/5.4.3/src/operator/shareReplay.ts#L7-L26) operator was introduced. It is very similar to `pipe(publishReplay(), refCount())`, but has one subtle difference.
 
 Like `share`, `shareReplay` passes the `multicast` operator a subject factory. That means that when re-subscribing to the source observable, the factory will be used to create a new subject. However, the factory only returns a new subject if the previously subscribed subject did not complete.
 
 `publishReplay` passes a `ReplaySubject` instance to the `multicast` operator — not a factory — and it’s this that effects the differing behaviour.
 
-Re-subscriptions to a `publishReplay().refCount()` observable will see the subject always replay its replay-able notifications. However, re-subscriptions to a `shareReplay()` observable might not — if the subject has not completed, a new subject will be created. So the difference is that with a `shareReplay()` observable, when the reference count drops to zero the replay-able notifications are flushed if the subject has not completed.
+Re-subscriptions to a `pipe(publishReplay(), refCount())` observable will see the subject always replay its replay-able notifications. However, re-subscriptions to a `shareReplay()` observable might not — if the subject has not completed, a new subject will be created. So the difference is that with a `shareReplay()` observable, when the reference count drops to zero the replay-able notifications are flushed if the subject has not completed.
 
 ## Some guidelines
 
@@ -266,17 +281,21 @@ From what we’ve seen in the examples, some guidelines can be inferred:
 - `refCount` can be used with `publish` — or any of its variants — to automatically unsubscribe from source observables.
 - When using `refCount` to automate re-subscriptions to source observables that complete, `publishReplay` and `publishLast` behave as you’d expect. However, `publish` and `publishBehavior` don’t behave in a useful manner for late subscriptions — so you should use `refCount` with `publish` and `publishBehavior` only to automate unsubscriptions.
 - When using `refCount` to automate re-subscriptions to source observables that do not complete, `publish`, `publishBehavior` and `publishReplay` behave as you’d expect.
-- The behaviour of `shareReplay()` is similar to that of `publishReplay().refCount()` and which you choose to use depends upon whether or not you want replay-able notifications to be flushed on re-subscription to the source observable.
+- The behaviour of `shareReplay()` is similar to that of `pipe(publishReplay(), refCount())` and which you choose to use depends upon whether or not you want replay-able notifications to be flushed on re-subscription to the source observable.
 
 ---
 
 The behaviour of `shareReplay` described above applies to versions of RxJS prior to 5.5. In the version 5.5.0 beta, `shareReplay` was [changed](https://github.com/ReactiveX/rxjs/pull/2910): when the reference count drops to zero, the operator no longer unsubscribes from the source observable.
 
-This change effectively makes the reference count redundant, as the subscription to the source will only be unsubscribed if the source completes or errors. The change means that `shareReplay` differs from `publishReplay().refCount()` only in its handling of errors:
+This change effectively makes the reference count redundant, as the subscription to the source will only be unsubscribed if the source completes or errors. The change means that `shareReplay` differs from `pipe(publishReplay(), refCount())` only in its handling of errors:
 
-- if the source errors, any future subscribers to the observable returned by `publishReplay().refCount()` will receive the error;
+- if the source errors, any future subscribers to the observable returned by `pipe(publishReplay(), refCount())` will receive the error;
 - however, any future subscriber to the observable returned by `share` will effect a new subscription to the source.
 
 ---
 
 The behaviour of `shareReplay` was changed again in version 6.4.0. For an explanation of the change, see [this article](/whats-changed-with-sharereplay/).
+
+---
+
+_This article was updated — in December, 2019 — to use RxJS-version-6 examples, etc._
