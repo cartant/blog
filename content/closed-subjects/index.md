@@ -24,7 +24,7 @@ export interface SubscriptionLike extends AnonymousSubscription {
 }
 ```
 
-Where `AnonymousSubscription` is the same interface, but without the read-only`closed` property.
+Where `AnonymousSubscription` is the same interface, but without the read-only `closed` property.
 
 The `closed` property indicates whether or not the subscription has been unsubscribed — either manually or automatically (if the observable completes or errors).
 
