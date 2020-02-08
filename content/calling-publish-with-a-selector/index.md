@@ -4,6 +4,7 @@ description: How to replace connectable observables with selectors
 date: "2019-04-02T09:45:50.204Z"
 categories: []
 keywords: []
+cardImage: "./title.jpeg"
 slug: /@cartant/rxjs-calling-publish-with-a-selector-3ab48f052a4b
 ---
 

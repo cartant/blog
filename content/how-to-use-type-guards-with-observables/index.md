@@ -4,6 +4,7 @@ description: Using type guards for run-time validation
 date: "2017-09-11T05:19:34.415Z"
 categories: []
 keywords: []
+cardImage: "./title.jpeg"
 slug: /@cartant/rxjs-how-to-use-type-guards-with-observables-11cc4d4f380f
 ---
 
@@ -60,27 +61,33 @@ With RxJS, there is often more than one way of implementing behaviour and that�
 
 A type guard evaluates a type predicate for a specified value and returns a boolean result. We want to use a type guard so that the correct type is inferred at compile time. Although we are not changing the value in any way, this is conceptually similar to the `map` operator: before using the guard, the observable will have a general type; and after using the guard, it will have a more specific type.
 
-Let’s create a general function that will accept a type guard and will return a projection function that can be passed to the `map` operator:
+Let’s create an `guard` operator that applies a type guard to a source observable's emitted values. We can leverage the `map` operator in its implementation, like this:
 
 ```ts
-function guard<T, R extends T>(
-  r: (value: T) => value is R,
+import { Observable, OperatorFunction } from "rxjs";
+import { map } from "rxjs/operators";
+
+export function guard<T, R extends T>(
+  guard: (value: T) => value is R,
   message?: string
-): (value: T) => R {
-  return value => {
-    if (r(value)) {
-      return value;
-    }
-    throw new Error(message || "Guard rejection.");
-  };
+): OperatorFunction<T, R> {
+  return source =>
+    source.pipe(
+      map(value => {
+        if (guard(value)) {
+          return value;
+        }
+        throw new Error(message || "Guard rejection.");
+      })
+    );
 }
 ```
 
-The `guard` function takes a type guard — `r` — and an optional rejection message. The returned ‘projection’ function doesn’t project values; it just returns values that pass the type guard and throws errors for values that do not.
+The `guard` operator takes a type guard — `r` — and an optional rejection message. The ‘projection’ function that it passes to `map` doesn’t project values; it just returns values that pass the type guard and throws errors for values that do not.
 
-When calling the `guard` function, its type parameters — `T` and `R` — can be inferred from the type guard, so they don’t need to be specified explicitly.
+When calling the `guard` operator, its type parameters — `T` and `R` — can be inferred from the type guard, so they don’t need to be specified explicitly.
 
-Let’s see how our `guard` function could be used with Angular’s [`HttpClient`](https://angular.io/guide/http). When the client’s `get` method is called like this:
+Let’s see how our `guard` operator could be used with Angular’s [`HttpClient`](https://angular.io/guide/http). When the client’s `get` method is called like this:
 
 ```ts
 const person = http.get(`/people/${id}`);
@@ -94,12 +101,12 @@ const person = http.get<Person>(`/people/${id}`);
 
 When called this way, the type of `person` will be inferred as `Observable<Person>`. This is a compile-time type assertion. It informs TypeScript that the response’s content will have a shape compatible with the `Person` interface. However, at run time, the response’s content could be anything.
 
-When the `guard` function is used with the `map` operator, like this:
+When the `guard` operator is used, like this:
 
 ```ts
-const person = http.get(`/people/${id}`).map(guard(isPerson));
+const person = http.get(`/people/${id}`).pipe(guard(isPerson));
 ```
 
 The type of `person` will be inferred as `Observable<Person>` and a run-time check will be performed on the response’s content, effecting an easy-to-diagnose error if the content fails the type guard.
 
-RxJS is nothing if not flexible and there are other ways of performing the compile-time type assertions and the run-time validations that we’ve looked at in this article. However, if you are already using interfaces and type guards, a general `guard` function makes it easy to add assertions and validations to observables that receive content from external sources. It’s an approach that I’ve found to be effective when using Angular’s `HttpClient`, [AngularFire2](https://github.com/angular/angularfire2)’s [`list`](https://github.com/angular/angularfire2/blob/master/docs/3-retrieving-data-as-lists.md) and [`object`](https://github.com/angular/angularfire2/blob/master/docs/2-retrieving-data-as-objects.md) observables, and RxJS’s [`ajax`](https://github.com/ReactiveX/rxjs/blob/5.4.3/src/observable/dom/AjaxObservable.ts#L101-L126) observable.
+RxJS is nothing if not flexible and there are other ways of performing the compile-time type assertions and the run-time validations that we’ve looked at in this article. However, if you are already using interfaces and type guards, a `guard` operator makes it easy to add assertions and validations to observables that receive content from external sources. It’s an approach that I’ve found to be effective when using Angular’s `HttpClient`, [AngularFire2](https://github.com/angular/angularfire2)’s [`list`](https://github.com/angular/angularfire2/blob/master/docs/3-retrieving-data-as-lists.md) and [`object`](https://github.com/angular/angularfire2/blob/master/docs/2-retrieving-data-as-objects.md) observables, and RxJS’s [`ajax`](https://github.com/ReactiveX/rxjs/blob/5.4.3/src/observable/dom/AjaxObservable.ts#L101-L126) observable.

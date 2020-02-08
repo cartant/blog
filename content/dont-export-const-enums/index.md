@@ -4,6 +4,7 @@ description: Exporting const enums from libraries will break some users
 date: "2019-12-14T10:36:00+1000"
 categories: []
 keywords: []
+cardImage: "./title.jpeg"
 ---
 
 ![Brick wall](title.jpeg "Photo by Waldemar Brandt on Unsplash")
@@ -12,7 +13,7 @@ If you are writing a library and you export a `const enum`, some developers will
 
 ## Non-const enums
 
-When you declare an `enum`, TypeScript will generate code for it. For example, this TypeScript snippet:
+When you declare an `enum`, TypeScript will generate code for it. For example, this TypeScript [snippet](https://thedailywtf.com/articles/What_Is_Truth_0x3f_):
 
 ```ts
 enum Bool {

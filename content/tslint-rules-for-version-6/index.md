@@ -4,6 +4,7 @@ description: "TSLint rules for clean, RxJS-version-6 code"
 date: "2018-04-27T08:32:17.709Z"
 categories: []
 keywords: []
+cardImage: "./title.jpeg"
 slug: /@cartant/rxjs-tslint-rules-for-version-6-d10e2482292d
 ---
 

@@ -4,6 +4,7 @@ description: Reading the documentation is recommended
 date: "2017-07-29T01:40:21.065Z"
 categories: []
 keywords: []
+cardImage: "./title.jpeg"
 slug: /@cartant/rxjs-marble-testing-rtfm-a9a6cd3db758
 ---
 

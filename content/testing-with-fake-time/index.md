@@ -4,6 +4,7 @@ description: How to test using fakeAsync or useFakeTimers
 date: "2018-06-27T04:19:35.603Z"
 categories: []
 keywords: []
+cardImage: "./title.jpeg"
 slug: /@cartant/rxjs-testing-with-fake-time-94114271eed2
 ---
 

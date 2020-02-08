@@ -4,6 +4,7 @@ description: How to use the static pipe function
 date: "2018-05-14T07:30:49.115Z"
 categories: []
 keywords: []
+cardImage: "./title.jpeg"
 slug: /@cartant/rxjs-combining-operators-397bad0628d0
 ---
 

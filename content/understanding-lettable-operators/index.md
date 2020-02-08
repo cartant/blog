@@ -4,6 +4,7 @@ description: An overview of lettable operators
 date: "2017-09-26T09:14:32.003Z"
 categories: []
 keywords: []
+cardImage: "./title.jpeg"
 slug: /@cartant/rxjs-understanding-lettable-operators-fe74dda186d3
 ---
 

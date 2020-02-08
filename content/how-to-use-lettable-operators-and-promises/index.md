@@ -4,6 +4,7 @@ description: A look at lettable operators and the toPromise function
 date: "2017-10-03T10:45:58.165Z"
 categories: []
 keywords: []
+cardImage: "./title.jpeg"
 slug: /@cartant/rxjs-how-to-use-lettable-operators-and-promises-2e717313bf76
 ---
 

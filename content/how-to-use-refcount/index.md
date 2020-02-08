@@ -4,6 +4,7 @@ description: An in-depth look at the refCount operator
 date: "2017-09-03T11:23:11.086Z"
 categories: []
 keywords: []
+cardImage: "./title.jpeg"
 slug: /@cartant/rxjs-how-to-use-refcount-73a0c6619a4e
 ---
 

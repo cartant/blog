@@ -4,6 +4,7 @@ description: How to avoid problems with operators that store state
 date: "2019-02-11T20:34:01.280Z"
 categories: []
 keywords: []
+cardImage: "./title.jpeg"
 slug: /@cartant/rxjs-managing-operator-state-2f20681df21d
 ---
 

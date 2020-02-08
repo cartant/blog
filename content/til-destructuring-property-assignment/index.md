@@ -4,6 +4,7 @@ description: How to assign destructured properties to variables
 date: "2019-12-22T16:24:00+1000"
 categories: []
 keywords: []
+cardImage: "./title.jpeg"
 ---
 
 ![Typewriter parts](title.jpeg "Photo by Florian Klauer on Unsplash")

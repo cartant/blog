@@ -4,6 +4,7 @@ description: How to avoid escaping the escape character in JavaScript string lit
 date: "2019-12-21T11:22:00+1000"
 categories: []
 keywords: []
+cardImage: "./title.jpeg"
 ---
 
 ![Ingredients](title.jpeg "Photo by Icons8 Team on Unsplash")
