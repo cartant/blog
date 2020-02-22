@@ -267,7 +267,7 @@ To summarise, from the examples we can see that when using `refCount` with sourc
 
 ## What does shareReplay do?
 
-In RxJS version [5.4.0](https://github.com/ReactiveX/rxjs/blob/master/CHANGELOG.md#540-2017-05-09), the [`shareReplay`](https://github.com/ReactiveX/rxjs/blob/5.4.3/src/operator/shareReplay.ts#L7-L26) operator was introduced. It is very similar to `pipe(publishReplay(), refCount())`, but has one subtle difference.
+In RxJS version [5.4.0](https://github.com/ReactiveX/rxjs/blob/5.4.0/CHANGELOG.md#540-2017-05-09), the [`shareReplay`](https://github.com/ReactiveX/rxjs/blob/5.4.3/src/operator/shareReplay.ts#L7-L26) operator was introduced. It is very similar to `pipe(publishReplay(), refCount())`, but has one subtle difference.
 
 Like `share`, `shareReplay` passes the `multicast` operator a subject factory. That means that when re-subscribing to the source observable, the factory will be used to create a new subject. However, the factory only returns a new subject if the previously subscribed subject did not complete.
 

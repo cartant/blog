@@ -16,13 +16,13 @@ Last year, I wrote a bunch of TSLint rules for [managing RxJS imports](/managing
 
 Most of the package’s import-related rules are no longer required when linting an RxJS-version-6 codebase, so if the latest release of the rules finds RxJS version 6 installed in `node_modules`, the rules that are no longer required are deprecated.
 
-If RxJS version 5 is installed — or if [`rxjs-compat`](https://github.com/ReactiveX/rxjs/blob/master/MIGRATION.md) is installed alongside RxJS version 6 — the rules will behave as they did in prior releases of the package.
+If RxJS version 5 is installed — or if [`rxjs-compat`](https://github.com/ReactiveX/rxjs/blob/7cff11cc20bfb2aa5c496576501d5889da1dcb4d/MIGRATION.md) is installed alongside RxJS version 6 — the rules will behave as they did in prior releases of the package.
 
 Let’s look briefly at what’s changed and then look at some rules that are still useful for maintaining a clean, RxJS-version-6 codebase.
 
 ## What’s changed with the imports?
 
-The [migration guide](https://github.com/ReactiveX/rxjs/blob/master/MIGRATION.md) discusses all of the changes in detail, but the main, import-related changes can be summarised as follows:
+The [migration guide](https://github.com/ReactiveX/rxjs/blob/7cff11cc20bfb2aa5c496576501d5889da1dcb4d/MIGRATION.md) discusses all of the changes in detail, but the main, import-related changes can be summarised as follows:
 
 - Classes, types and observable factory functions are imported from `"rxjs"`.
 - Operators are imported from `"rxjs/operators"`.

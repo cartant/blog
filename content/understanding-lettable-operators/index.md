@@ -14,7 +14,7 @@ _An update: lettable operators are now officially_ [_pipeable operators_](https:
 
 ---
 
-The version [5.5.0 beta](https://github.com/ReactiveX/rxjs/blob/master/CHANGELOG.md#550-beta0-2017-09-22) of RxJS introduces [lettable operators](https://github.com/ReactiveX/rxjs/blob/ffaf53843de875689c50ac776ce744683c45b012/doc/lettable-operators.md).
+The version [5.5.0 beta](https://github.com/ReactiveX/rxjs/blob/5.5.0-beta.0/CHANGELOG.md#550-beta0-2017-09-22) of RxJS introduces [lettable operators](https://github.com/ReactiveX/rxjs/blob/ffaf53843de875689c50ac776ce744683c45b012/doc/lettable-operators.md).
 
 Lettable operators offer a new way of composing observable chains and they have advantages for both application developers and library authors. Let’s look briefly at the existing composition mechanisms in RxJS and then look at lettable operators in more detail.
 

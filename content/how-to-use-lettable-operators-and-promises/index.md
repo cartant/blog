@@ -10,7 +10,7 @@ slug: /@cartant/rxjs-how-to-use-lettable-operators-and-promises-2e717313bf76
 
 ![Glove on a picket](title.jpeg "Photo by Gary Bendig on Unsplash")
 
-_With the release of_ [_RxJS 5.5.0-beta.5_](https://github.com/ReactiveX/rxjs/blob/master/CHANGELOG.md#550-beta5-2017-10-06)_,_ `toPromise` _is now attached to_ `Observable.prototype`_, rendering this look at its ‘lettable’ variant a historical curiosity_.
+_With the release of_ [_RxJS 5.5.0-beta.5_](https://github.com/ReactiveX/rxjs/blob/5.5.0-beta.5/CHANGELOG.md#550-beta5-2017-10-06)_,_ `toPromise` _is now attached to_ `Observable.prototype`_, rendering this look at its ‘lettable’ variant a historical curiosity_.
 
 ---
 

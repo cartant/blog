@@ -16,7 +16,7 @@ _If you’re only interested in the change, skip to the TL;DR at the bottom of t
 
 ## The operator’s history
 
-The `shareReplay` operator was introduced in version [5.4.0](https://github.com/ReactiveX/rxjs/blob/master/CHANGELOG.md#540-2017-05-09).
+The `shareReplay` operator was introduced in version [5.4.0](https://github.com/ReactiveX/rxjs/blob/5.4.0/CHANGELOG.md#540-2017-05-09).
 
 Like the `share` operator, `shareReplay` returns a [hot](https://medium.com/@benlesh/hot-vs-cold-observables-f8094ed53339), reference-counted observable, but replays the specified number of `next` notifications. Also, if the source completes, it ensures that the `complete` notification is replayed to new subscribers and that no further subscriptions are made to the source observable.
 
@@ -92,7 +92,7 @@ In some situations that behaviour might not be what you want.
 
 For example, if the source effects a HTTP request, you might not want that request to be cancelled. You might want the request to complete, so that the response can be stored in the shared observable — ready for the next subscriber.
 
-In version [5.5.0-beta.4](https://github.com/ReactiveX/rxjs/blob/master/CHANGELOG.md#550-beta4-2017-10-06), a ‘bug’ was fixed and the behaviour of the `shareReplay` operator was changed so that the subscription to the source was not unsubscribed when the reference count dropped to zero.
+In version [5.5.0-beta.4](https://github.com/ReactiveX/rxjs/blob/5.5.0-beta.4/CHANGELOG.md#550-beta4-2017-10-06), a ‘bug’ was fixed and the behaviour of the `shareReplay` operator was changed so that the subscription to the source was not unsubscribed when the reference count dropped to zero.
 
 The example program’s output with version 5.5.0-beta.4 is:
 
@@ -150,7 +150,7 @@ Because the source observable does not complete, it is never unsubscribed —�
 
 Forever.
 
-In version [6.4.0](https://github.com/ReactiveX/rxjs/blob/master/CHANGELOG.md#640-2019-01-30), a change was made so that both use cases could be supported.
+In version [6.4.0](https://github.com/ReactiveX/rxjs/blob/6.4.0/CHANGELOG.md#640-2019-01-30), a change was made so that both use cases could be supported.
 
 ## The change — TL;DR
 
