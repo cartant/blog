@@ -139,6 +139,6 @@ To summarise, when you need to use a flattening operator in an effect/epic you s
 
 I’ve added an `rxjs-no-unsafe-switchmap` rule to the [`rxjs-tslint-rules`](https://github.com/cartant/rxjs-tslint-rules) package.
 
-The rule recognises NgRx effects and `redux-observable` epics, determines the their action types and then searches for particular verbs within the action types (e.g. `add`, `update`, `remove`, etc.). It has some sensible defaults and [can be configured](https://github.com/cartant/rxjs-tslint-rules#rxjs-no-unsafe-switchmap) if the defaults are too general.
+The rule recognises NgRx effects and `redux-observable` epics, determines their action types and then searches for particular verbs within the action types (e.g. `add`, `update`, `remove`, etc.). It has some sensible defaults and [can be configured](https://github.com/cartant/rxjs-tslint-rules#rxjs-no-unsafe-switchmap) if the defaults are too general.
 
 After enabling the rule and running TSLint over some applications I wrote last year, I found more than a few effects that used `switchMap` in an unsafe manner. So thanks for your tweet, Victor.
