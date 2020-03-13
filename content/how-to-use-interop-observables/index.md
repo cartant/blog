@@ -109,7 +109,7 @@ if (!Symbol["observable"]) {
 
 Another problem is that it's not possible to [ponyfill](https://github.com/sindresorhus/ponyfill) `Symbol.observable` because of the way that TypeScript deals with well-known symbols.
 
-[Declaration merging](https://www.typescriptlang.org/docs/handbook/declaration-merging.html) can be used to declare a type for `Symbol.observable`, like this:
+[Declaration merging](https://www.typescriptlang.org/docs/handbook/declaration-merging.html) can be used to declare a type for `Symbol.observable` — based on TypeScript's [`Symbol.iterator` declaration](https://github.com/microsoft/TypeScript/blob/ad8d3d90a5a8cc6a3b088a7b717e002d755e89f3/lib/lib.es2015.iterable.d.ts#L23-L29) — like this:
 
 ```ts
 declare global {
