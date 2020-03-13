@@ -174,7 +174,7 @@ const greeter = {
 
 This use of the observable interop point can appeal to package authors, as it offers a way of creating observable sources without a dependency on RxJS — or on another observable implementation.
 
-[Christoph Guttandin](https://github.com/chrisguttandin)'s [`subscribable-things`](https://github.com/chrisguttandin/subscribable-things) package uses this interop observable approach to wrap DOM APIs — like [`matchMedia`](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia) — so that they can be used as observable sources with RxJS, Bacon.js, Callbags, Kefir or xstream, or used directly in `useEffect` or `useLayoutEffect` hooks in React.
+[Christoph Guttandin](https://github.com/chrisguttandin)'s [`subscribable-things`](https://github.com/chrisguttandin/subscribable-things) package uses this interop observable approach to wrap DOM APIs — like [`matchMedia`](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia) — so that they can be used as observable sources with RxJS, Bacon.js, Callbags, Kefir or xstream.
 
 ## rxjs-interop
 
