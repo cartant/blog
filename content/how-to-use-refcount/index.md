@@ -66,7 +66,7 @@ function instrument<T>(source: Observable<T>) {
 function observer<T>(name: string) {
   return {
     next: (value: T) => console.log(`observer ${name}: ${value}`),
-    complete: () => console.log(`observer ${name}: complete`),
+    complete: () => console.log(`observer ${name}: complete`)
   };
 }
 ```

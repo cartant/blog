@@ -134,3 +134,193 @@ function delayUntil<T>(notifier: Observable<any>): OperatorFunction<T, T> {
 ```
 
 Of course, it's a good idea to write [some tests](https://github.com/cartant/rxjs-etc/blob/f7fbc18119850fd35b9755b727a3f1d93df83fdf/source/operators/delayUntil-spec.ts) to ensure that the operator behaves as expected, too.
+
+---
+
+After publishing this, a bug was found — yes, I [missed a test case](https://github.com/cartant/rxjs-etc/blob/c8d459d4b739cd0ad4aeb7a2aac4517fff98a1d5/source/operators/delayUntil-spec.ts#L53-L65) and got the [expectation wrong in another](https://github.com/cartant/rxjs-etc/blob/c8d459d4b739cd0ad4aeb7a2aac4517fff98a1d5/source/operators/delayUntil-spec.ts#L67-L79).
+
+With the above implementation, if a source completes before the signal is received, any buffered notifications are emitted at the time of completion. That's incorrect; they should be delayed until the signal is received — as that's how the `delay` operator behaves.
+
+To fix the bug, we need to prevent the source's completion from closing the buffer. We can do this by concatenating `NEVER` to the published source — doing so ignores any completion notification received from `published`:
+
+<!-- prettier-ignore -->
+```ts
+concat(published, NEVER).pipe(buffer(notifier), take(1), mergeAll())
+```
+
+With the bug fixed, the operator looks like this:
+
+<!-- prettier-ignore -->
+```ts
+import { concat, Observable, OperatorFunction } from "rxjs";
+import { buffer, mergeAll, publish, take } from "rxjs/operators";
+
+function delayUntil<T>(notifier: Observable<any>): OperatorFunction<T, T> {
+  return source =>
+    source.pipe(
+      publish(published =>
+        concat(
+          concat(published, NEVER).pipe(buffer(notifier), take(1), mergeAll()),
+          published
+        )
+      )
+    );
+}
+```
+
+---
+
+Unfortunately, there is another bug in the above implementation. It was found when a marble test was added for an [edge case](https://github.com/cartant/rxjs-etc/blob/0f613493fdd28d6a8864ddaa3447554991cc0d2a/source/operators/delayUntil-spec.ts#L123-L135): a notifier that completes without emitting.
+
+The bug is caused by the built-in `buffer` operator incorrectly treating the completion of its notifier as a signal. `buffer` is not the only operator that treats complete notifications this way; [`delayWhen`](https://github.com/ReactiveX/rxjs/issues/3665#issuecomment-387758861) exhibits the same behaviour. Altering the behaviour will be a breaking change — to be made in the next major version of RxJS.
+
+We could fix the problem by ignoring notifier completion — by concatenating `notifier` and `NEVER` — but that would result in values being buffered unnecessarily: if the notifier completes without signalling, we know that we are never going to emit delayed values.
+
+Rather than complicate the implementation with an elaborate arrangement of built-in operators — to work around the `buffer` bug — let's get rid of `buffer` and build our own pre-signal, delayed observable using `new Observable`, like this:
+
+<!-- prettier-ignore -->
+```ts
+const delayed = new Observable<T>(subscriber => {
+  let buffering = true;
+  const buffer: T[] = [];
+  const subscription = new Subscription();
+  /* todo */
+  return subscription;
+};
+```
+
+We'll subscribe to `published` and for as long as the observable should be buffering, we'll store values in the buffer. And we'll pass any received error notification to the subscriber:
+
+<!-- prettier-ignore -->
+```ts
+const delayed = new Observable<T>(subscriber => {
+  let buffering = true;
+  const buffer: T[] = [];
+  const subscription = new Subscription();
+  subscription.add(
+    published.subscribe(
+      value => buffering && buffer.push(value),
+      error => subscriber.error(error)
+    )
+  );
+  /* todo */
+  return subscription;
+};
+```
+
+We also need to subscribe to the notifier.
+
+When the notifier emits a signal, we want to emit each of the buffered values and then complete. We also want to pass any received error notification to the subscriber. And when the notifier completes, we want to prevent further buffering and clear any buffered values:
+
+<!-- prettier-ignore -->
+```ts
+const delayed = new Observable<T>(subscriber => {
+  let buffering = true;
+  const buffer: T[] = [];
+  const subscription = new Subscription();
+  subscription.add(
+    notifier.subscribe(
+      () => {
+        buffer.forEach(value => subscriber.next(value));
+        subscriber.complete();
+      },
+      error => subscriber.error(error),
+      () => {
+        buffering = false;
+        buffer.length = 0;
+      }
+    )
+  );
+  subscription.add(
+    published.subscribe(
+      value => buffering && buffer.push(value),
+      error => subscriber.error(error)
+    )
+  );
+  /* todo */
+  return subscription;
+};
+```
+
+There is one more thing that we need to do with our pre-signal observable: we need to make sure that the buffer is cleared if an explicit unsubscription occurs. We can do that by adding a teardown function to the subscription, like this:
+
+<!-- prettier-ignore -->
+```ts
+const delayed = new Observable<T>(subscriber => {
+  let buffering = true;
+  const buffer: T[] = [];
+  const subscription = new Subscription();
+  subscription.add(
+    notifier.subscribe(
+      () => {
+        buffer.forEach(value => subscriber.next(value));
+        subscriber.complete();
+      },
+      error => subscriber.error(error),
+      () => {
+        buffering = false;
+        buffer.length = 0;
+      }
+    )
+  );
+  subscription.add(
+    published.subscribe(
+      value => buffering && buffer.push(value),
+      error => subscriber.error(error)
+    )
+  );
+  subscription.add(() => {
+    buffer.length = 0;
+  });
+  return subscription;
+};
+```
+
+We've written more code, but this implementation makes the handling of the notifier and source notifications a little clearer — certainly clearer than working around the bug in `buffer`.
+
+The finished `delayUntil` operator looks like this:
+
+<!-- prettier-ignore -->
+```ts
+import { concat, Observable, OperatorFunction, Subscription } from "rxjs";
+import { publish } from "rxjs/operators";
+
+export function delayUntil<T>(
+  notifier: Observable<any>
+): OperatorFunction<T, T> {
+  return source =>
+    source.pipe(
+      publish(published => {
+        const delayed = new Observable<T>(subscriber => {
+          let buffering = true;
+          const buffer: T[] = [];
+          const subscription = new Subscription();
+          subscription.add(
+            notifier.subscribe(
+              () => {
+                buffer.forEach(value => subscriber.next(value));
+                subscriber.complete();
+              },
+              error => subscriber.error(error),
+              () => {
+                buffering = false;
+                buffer.length = 0;
+              }
+            )
+          );
+          subscription.add(
+            published.subscribe(
+              value => buffering && buffer.push(value),
+              error => subscriber.error(error)
+            )
+          );
+          subscription.add(() => {
+            buffer.length = 0;
+          });
+          return subscription;
+        });
+        return concat(delayed, published);
+      })
+    );
+}
+```

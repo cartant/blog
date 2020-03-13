@@ -63,7 +63,7 @@ Or assigned to a property:
 
 ```ts
 const data = {
-  names: names.sort(),
+  names: names.sort()
 };
 ```
 

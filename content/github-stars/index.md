@@ -30,7 +30,7 @@ The 'All activity' section shows you some of the things that the people you are 
 - repos they've starred; and
 - people they've followed.
 
-It's interesting to see people's activity — particularly if they've just created a new project — but the most useful inclusion, for me, are the repos that people have starred. It's a great way to find out about new packages. It's often that case the that people you've chosen to follow have similar interests and are solving the same kinds of problems that you are, so repos that they've decided to star are quite like to be of use — or, at least, of interest — to you. Most of my package discoveries are made this way.
+It's interesting to see people's activity — particularly if they've just created a new project — but the most useful inclusion, for me, are the repos that people have starred. It's a great way to find out about new packages. It's often that case the that people you've chosen to follow have similar interests and are solving the same kinds of problems that you are, so repos that they've decided to star are quite likely to be of use — or, at least, of interest — to you. Most of my package discoveries are made this way.
 
 The relationship between followers and stars is presented in another part GitHub's user interface, too. When you click a repo's star count, it navigates to a page that gives you a paginated view of the repo's stargazers — the people who starred it. On that page, there are two tabs that separate said stargazers into the people you know — that is, the people you follow — and everyone else.
 

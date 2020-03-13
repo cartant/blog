@@ -68,7 +68,7 @@ export function get(
   return ajax.get(url).pipe(
     map(response => ({
       content: response.response,
-      next: next(response),
+      next: next(response)
     }))
   );
 }

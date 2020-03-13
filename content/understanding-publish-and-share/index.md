@@ -58,7 +58,7 @@ _The examples in this article use the following utility function to create named
 function observer(name: string) {
   return {
     next: (value: number) => console.log(`observer ${name}: ${value}`),
-    complete: () => console.log(`observer ${name}: complete`),
+    complete: () => console.log(`observer ${name}: complete`)
   };
 }
 ```

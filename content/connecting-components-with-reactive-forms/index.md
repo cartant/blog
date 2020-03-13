@@ -40,7 +40,7 @@ A presentational component that displays a list of GitHub users with usernames t
         <p md-line>{{ user.public_repos }} public repo(s)</p>
       </md-list-item>
     </md-list>
-  `,
+  `
 })
 export class UserSearchComponent implements OnDestroy, OnInit {
   @Input() public observer: PartialObserver<string>;
@@ -75,7 +75,7 @@ The container component would look something like this:
   selector: "user-search-container",
   template: `
     <user-search [observer]="observer" [users]="users | async"> </user-search>
-  `,
+  `
 })
 export class UserSearchContainer {
   public observer: PartialObserver<string>;

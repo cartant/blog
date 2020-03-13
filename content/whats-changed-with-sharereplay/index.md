@@ -56,7 +56,7 @@ export const log = <T>(source: Observable<T>, name: string) =>
     return source.pipe(
       tap({
         next: value => console.log(`${name}: ${value}`),
-        complete: () => console.log(`${name}: complete`),
+        complete: () => console.log(`${name}: complete`)
       }),
       finalize(() => console.log(`${name}: unsubscribed`))
     );
@@ -182,7 +182,7 @@ const shared = log(
   source.pipe(
     shareReplay({
       bufferSize: 1,
-      refCount: true,
+      refCount: true
     })
   ),
   "shared"

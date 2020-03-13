@@ -49,14 +49,14 @@ import { debounceTime, distinctUntilChanged, pluck } from "rxjs/operators";
     <div class="searching" *ngIf="term$ | async as term">
       <span>Searching for {{ term }}</span>
     </div>
-  `,
+  `
 })
 export class SomeComponent {
   form: FormGroup;
   term$: Observable<string>;
   constructor(formBuilder: FormBuilder) {
     this.form = formBuilder.group({
-      term: [""],
+      term: [""]
     });
     this.term$ = this.form.valueChanges.pipe(
       pluck("term"),
@@ -81,7 +81,7 @@ describe("SomeComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SomeComponent],
-      imports: [FormsModule, ReactiveFormsModule],
+      imports: [FormsModule, ReactiveFormsModule]
     }).compileComponents();
   }));
 

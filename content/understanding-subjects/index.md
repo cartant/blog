@@ -33,7 +33,7 @@ To enable parent components to connect to the observable, the `awesome-component
   selector: "parent-component",
   template: `
     <awesome-component [observer]="observer"></awesome-component>
-  `,
+  `
 })
 export class ParentComponent {
   public observer: PartialObserver<any>;
@@ -41,7 +41,7 @@ export class ParentComponent {
     this.observer = {
       next(value) {
         /* do something with the value */
-      },
+      }
     };
   }
 }
@@ -58,7 +58,7 @@ Subjects are both observers and observables, so if we create a `Subject`, it can
   selector: "parent-component",
   template: `
     <awesome-component [observer]="observer"></awesome-component>
-  `,
+  `
 })
 export class ParentComponent {
   public observer: PartialObserver<any>;
@@ -86,7 +86,7 @@ By using a `Subject` to compose an observable, the `awesome-component` can be us
   selector: "another-component",
   template: `
     <awesome-component [observer]="observer"></awesome-component>
-  `,
+  `
 })
 export class AnotherComponent {
   public observer: PartialObserver<any>;
@@ -108,7 +108,7 @@ Interestingly, there is another way that component could choose to receive only 
   selector: "another-component",
   template: `
     <awesome-component [observer]="observer"></awesome-component>
-  `,
+  `
 })
 export class AnotherComponent {
   public observer: PartialObserver<any>;
@@ -159,7 +159,7 @@ To understand the `BehaviorSubject`, let’s have a look at another component-ba
   selector: "parent-component",
   template: `
     <awesome-component [observer]="observer"></awesome-component>
-  `,
+  `
 })
 export class ParentComponent {
   public observer: PartialObserver<any>;

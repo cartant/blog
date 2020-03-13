@@ -117,14 +117,14 @@ collection
       filter(shouldPut),
       concatMap(doc =>
         ajax.put(`${uri}/docs/${doc.id}`, doc.toJSON(), {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         })
       ),
       ignoreElements()
     )
   )
   .subscribe({
-    complete: () => console.log("Finished."),
+    complete: () => console.log("Finished.")
   });
 ```
 

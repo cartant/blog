@@ -19,7 +19,7 @@ When you declare an `enum`, TypeScript will generate code for it. For example, t
 enum Bool {
   True,
   False,
-  FileNotFound,
+  FileNotFound
 }
 let value = Bool.FileNotFound;
 ```
@@ -46,7 +46,7 @@ When an `enum` is declared as `const`, TypeScript doesn’t generate code for th
 const enum Bool {
   True,
   False,
-  FileNotFound,
+  FileNotFound
 }
 let value = Bool.FileNotFound;
 ```

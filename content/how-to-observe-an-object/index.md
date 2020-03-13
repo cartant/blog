@@ -49,13 +49,13 @@ import {
   debounceTime,
   distinctUntilChanged,
   switchMapTo,
-  takeUntil,
+  takeUntil
 } from "rxjs/operators";
 import { observe } from "rxjs-observe";
 
 @Component({
   selector: "some-component",
-  template: "<span>Some useless component that writes to the console</span>",
+  template: "<span>Some useless component that writes to the console</span>"
 })
 class SomeComponent implements OnInit, OnDestroy {
   @Input() public name: string;
