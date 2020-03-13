@@ -5,7 +5,7 @@
   },
   "dependencies": {
     "husky": "^4.0.0",
-    "lint-staged": "^9.5.0",
+    "lint-staged": "^10.0.8",
     "prettier": "^1.19.1",
     "remark-cli": "^7.0.1",
     "remark-lint": "^6.0.5",
@@ -22,14 +22,8 @@
   "keywords": [],
   "license": "All Rights Reserved",
   "lint-staged": {
-    "*.{js,jsx,json,md}": [
-      "prettier --write",
-      "git add"
-    ],
-    "*.md": [
-      "remark",
-      "git add"
-    ]
+    "*.{js,jsx,json,md}": "prettier --write",
+    "*.md": "remark"
   },
   "main": "none",
   "name": "blog",
