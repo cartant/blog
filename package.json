@@ -6,7 +6,7 @@
   "dependencies": {
     "husky": "^4.0.0",
     "lint-staged": "^10.0.8",
-    "prettier": "^1.19.1",
+    "prettier": "^2.0.0",
     "remark-cli": "^7.0.1",
     "remark-lint": "^6.0.5",
     "remark-lint-fenced-code-flag": "^1.0.3"
