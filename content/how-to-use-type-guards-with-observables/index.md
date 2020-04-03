@@ -71,9 +71,9 @@ export function guard<T, R extends T>(
   guard: (value: T) => value is R,
   message?: string
 ): OperatorFunction<T, R> {
-  return source =>
+  return (source) =>
     source.pipe(
-      map(value => {
+      map((value) => {
         if (guard(value)) {
           return value;
         }

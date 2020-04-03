@@ -62,12 +62,12 @@ RxJS includes an `isEmpty` operator which will emit a boolean value when the sou
 function defaultObservableIfEmpty<T>(
   defaultObservable: Observable<T>
 ): (source: Observable<T>) => Observable<T> {
-  return source =>
-    source.publish(shared =>
+  return (source) =>
+    source.publish((shared) =>
       shared.merge(
         shared
           .isEmpty()
-          .mergeMap(empty =>
+          .mergeMap((empty) =>
             empty ? defaultObservable : Observable.empty<T>()
           )
       )
@@ -95,13 +95,13 @@ The implementation can use the `takeWhile` operator as its basis; it just needs 
 function takeWhileInclusive<T>(
   predicate: (value: T) => boolean
 ): (source: Observable<T>) => Observable<T> {
-  return source =>
+  return (source) =>
     source.multicast(
       () => new ReplaySubject<T>(1),
-      shared =>
+      (shared) =>
         shared
           .takeWhile(predicate)
-          .concat(shared.take(1).filter(t => !predicate(t)))
+          .concat(shared.take(1).filter((t) => !predicate(t)))
     );
 }
 ```

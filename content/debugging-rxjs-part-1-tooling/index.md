@@ -68,7 +68,7 @@ spy();
 const interval = new Observable.interval(2000).tag("interval");
 
 const people = interval
-  .map(value => {
+  .map((value) => {
     const names = ["alice", "bob"];
     return names[value % names.length];
   })

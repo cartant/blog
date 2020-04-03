@@ -71,7 +71,7 @@ function subsequent<T>(
   operator: (source: Observable<T>) => Observable<T>
 ): (source: Observable<T>) => Observable<T> {
   return (source: Observable<T>) =>
-    new Observable<T>(observer => {
+    new Observable<T>((observer) => {
       const published = source.pipe(publish()) as ConnectableObservable<T>;
       const concatenated = concat(
         published.pipe(take(count)),
@@ -103,7 +103,7 @@ function subsequent<T>(
   operator: (source: Observable<T>) => Observable<T>
 ): (source: Observable<T>) => Observable<T> {
   return (source: Observable<T>) =>
-    new Observable<T>(observer => {
+    new Observable<T>((observer) => {
       const published = source.pipe(publish()) as ConnectableObservable<T>;
       const concatenated = concat(
         published.pipe(take(count)),
@@ -134,7 +134,7 @@ function prioritize<T, R>(
   ) => Observable<R>
 ): (source: Observable<T>) => Observable<R> {
   return (source: Observable<T>) =>
-    new Observable<T>(observer => {
+    new Observable<T>((observer) => {
       const published = publish<T>()(source) as ConnectableObservable<T>;
       const prioritized = new Subject<T>();
       const subscription = new Subscription();

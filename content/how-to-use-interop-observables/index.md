@@ -74,7 +74,7 @@ if (typeof instance[Symbol.observable] !== "function") {
   throw new Error("Not observable");
 }
 const observable = instance[Symbol.observable]();
-observable.subscribe(value => console.log(value));
+observable.subscribe((value) => console.log(value));
 ```
 
 Consuming interop observables in RxJS is a little simpler.
@@ -82,7 +82,7 @@ Consuming interop observables in RxJS is a little simpler.
 RxJS declares an [`InteropObservable`](https://github.com/ReactiveX/rxjs/blob/28e317e4b1c050a76abb57e798ab419fcbe8ed47/src/internal/types.ts#L57) type which is included in the [`ObservableInput`](https://github.com/ReactiveX/rxjs/blob/28e317e4b1c050a76abb57e798ab419fcbe8ed47/src/internal/types.ts#L52) type's union — via the [`SubscribableOrPromise`](https://github.com/ReactiveX/rxjs/blob/28e317e4b1c050a76abb57e798ab419fcbe8ed47/src/internal/types.ts#L37) type — so interop observables can be used anywhere an `ObservableInput` is accepted. Which means interop observable instances can be passed to [`from`](https://github.com/ReactiveX/rxjs/blob/28e317e4b1c050a76abb57e798ab419fcbe8ed47/src/internal/observable/from.ts#L6), like this:
 
 ```ts
-from(instance).subscribe(value => console.log(value));
+from(instance).subscribe((value) => console.log(value));
 ```
 
 It's not always necessary to call `from` on interop observable instances. Because interop observables are valid `ObservableInput`s, they can also be passed directly to factory functions like [`concat`](https://github.com/ReactiveX/rxjs/blob/28e317e4b1c050a76abb57e798ab419fcbe8ed47/src/internal/observable/concat.ts#L20) or returned from `project` functions passed to operators like [`concatMap`](https://github.com/ReactiveX/rxjs/blob/28e317e4b1c050a76abb57e798ab419fcbe8ed47/src/internal/operators/concatMap.ts#L5).
@@ -155,7 +155,7 @@ const greeter = {
   [Symbol.observable]() {
     return {
       subscribe(nextOrObserver, error, complete) {
-        return greet(greeting => {
+        return greet((greeting) => {
           if (typeof nextOrObserver === "function") {
             nextOrObserver(greeting);
           } else {
@@ -195,7 +195,7 @@ const greeter = patch({
     return {
       subscribe(...args) {
         const observer = toObserver(...args);
-        return greet(greeting => observer.next(greeting));
+        return greet((greeting) => observer.next(greeting));
       }
     };
   },

@@ -66,7 +66,7 @@ export function get(
   next: string | null;
 }> {
   return ajax.get(url).pipe(
-    map(response => ({
+    map((response) => ({
       content: response.response,
       next: next(response)
     }))
@@ -100,7 +100,7 @@ const repos = get(url).pipe(
   expand(({ next }) => (next ? get(next) : empty())),
   concatMap(({ content }) => content)
 );
-repos.subscribe(repo => console.log(repo));
+repos.subscribe((repo) => console.log(repo));
 ```
 
 The observable returned from the initial call to the `get` function emits only a single value: the first page.

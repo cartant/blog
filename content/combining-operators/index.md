@@ -115,7 +115,7 @@ collection
   .traverse(
     pipe(
       filter(shouldPut),
-      concatMap(doc =>
+      concatMap((doc) =>
         ajax.put(`${uri}/docs/${doc.id}`, doc.toJSON(), {
           "Content-Type": "application/json"
         })

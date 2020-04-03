@@ -18,8 +18,8 @@ If you are used to working with [fluent APIs](https://www.martinfowler.com/bliki
 
 ```ts
 const developers = employees
-  .filter(e => e.role === "developer")
-  .map(e => e.name)
+  .filter((e) => e.role === "developer")
+  .map((e) => e.name)
   .sort();
 ```
 

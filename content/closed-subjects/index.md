@@ -45,10 +45,10 @@ It’s also possible to pass the instance in more than one `subscribe` call and 
 import { interval, Subscriber } from "rxjs";
 import { map } from "rxjs/operators";
 
-const one = interval(1000).pipe(map(value => `one(${value})`));
-const two = interval(2000).pipe(map(value => `two(${value})`));
+const one = interval(1000).pipe(map((value) => `one(${value})`));
+const two = interval(2000).pipe(map((value) => `two(${value})`));
 
-const subscriber = new Subscriber<string>(value => console.log(value));
+const subscriber = new Subscriber<string>((value) => console.log(value));
 one.subscribe(subscriber);
 two.subscribe(subscriber);
 subscriber.unsubscribe();
@@ -66,11 +66,11 @@ Its implementation of `SubscriptionLike` suggests that — as with a `Subscr
 import { interval, Subject } from "rxjs";
 import { map } from "rxjs/operators";
 
-const one = interval(1000).pipe(map(value => `one(${value})`));
-const two = interval(2000).pipe(map(value => `two(${value})`));
+const one = interval(1000).pipe(map((value) => `one(${value})`));
+const two = interval(2000).pipe(map((value) => `two(${value})`));
 
 const subject = new Subject<string>();
-subject.subscribe(value => console.log(value));
+subject.subscribe((value) => console.log(value));
 
 one.subscribe(subject);
 two.subscribe(subject);

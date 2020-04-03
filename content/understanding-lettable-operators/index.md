@@ -27,8 +27,8 @@ import * as Rx from "rxjs";
 
 const name = Rx.Observable.ajax
   .getJSON<{ name: string }>("/api/employees/alice")
-  .map(employee => employee.name)
-  .catch(error => Rx.Observable.of(null));
+  .map((employee) => employee.name)
+  .catch((error) => Rx.Observable.of(null));
 ```
 
 The obvious disadvantage with this approach is that the applications will contain everything that’s in RxJS, even if it’s not required.
@@ -45,8 +45,8 @@ import "rxjs/add/operator/map";
 
 const name = Observable.ajax
   .getJSON<{ name: string }>("/api/employees/alice")
-  .map(employee => employee.name)
-  .catch(error => Observable.of(null));
+  .map((employee) => employee.name)
+  .catch((error) => Observable.of(null));
 ```
 
 The disadvantage with this approach is that developers are burdened with managing the prototype-patching imports.
@@ -64,8 +64,8 @@ import { _catch } from "rxjs/operator/catch";
 import { map } from "rxjs/operator/map";
 
 const source = ajax.getJSON<{ name: string }>("/api/employees/alice");
-const mapped = map.call(source, employee => employee.name);
-const name = _catch.call(mapped, error => of(null));
+const mapped = map.call(source, (employee) => employee.name);
+const name = _catch.call(mapped, (error) => of(null));
 ```
 
 The disadvantage with this approach — apart from the verbosity — is that `Function.prototype.call` returns `any`, so the operator’s type information is lost. In this example, the inferred type of `mapped` and `name` will be `any`.
@@ -84,8 +84,8 @@ import { of } from "rxjs/observable/of";
 import { catchError, map } from "rxjs/operators";
 
 const name = ajax.getJSON<{ name: string }>("/api/employees/alice").pipe(
-  map(employee => employee.name),
-  catchError(error => of(null))
+  map((employee) => employee.name),
+  catchError((error) => of(null))
 );
 ```
 
@@ -107,7 +107,7 @@ export function retry<T>(
   wait: number
 ): (source: Rx.Observable<T>) => Rx.Observable<T> {
   return (source: Rx.Observable<T>) =>
-    source.retryWhen(errors =>
+    source.retryWhen((errors) =>
       errors
         // Each time an error occurs, increment the accumulator.
         // When the maximum number of retries have been attempted, throw the error.
@@ -132,8 +132,8 @@ import { retry } from "./retry";
 const name = Rx.Observable.ajax
   .getJSON<{ name: string }>("/api/employees/alice")
   .let(retry(3, 1000))
-  .map(employee => employee.name)
-  .catch(error => Rx.Observable.of(null));
+  .map((employee) => employee.name)
+  .catch((error) => Rx.Observable.of(null));
 ```
 
 Using the `let` operator, we’ve been able to create a reusable function much more simply than we would have been able to create a prototype-patching operator. What we’ve created is a lettable operator.
@@ -150,8 +150,8 @@ import { retry } from "./retry";
 
 const name = ajax.getJSON<{ name: string }>("/api/employees/alice").pipe(
   retry(3, 1000),
-  map(employee => employee.name),
-  catchError(error => of(null))
+  map((employee) => employee.name),
+  catchError((error) => of(null))
 );
 ```
 
@@ -165,7 +165,7 @@ export function retry<T>(
   count: number,
   wait: number
 ): (source: Observable<T>) => Observable<T> {
-  return retryWhen(errors =>
+  return retryWhen((errors) =>
     errors.pipe(
       // Each time an error occurs, increment the accumulator.
       // When the maximum number of retries have been attempted, throw the error.

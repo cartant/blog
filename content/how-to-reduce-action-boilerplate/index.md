@@ -115,7 +115,7 @@ function todosReducer(state: State = [], action: AddTodo | RemoveTodo): State {
     }
     case "REMOVE_TODO": {
       const { id } = action;
-      return state.filter(t => t.id !== id);
+      return state.filter((t) => t.id !== id);
     }
   }
   return state;
@@ -168,7 +168,7 @@ function todoReducer(state: State = [], action: TodoActions): State {
     }
     case TodoActionTypes.REMOVE_TODO: {
       const { id } = action;
-      return state.filter(t => t.id !== id);
+      return state.filter((t) => t.id !== id);
     }
   }
   return state;
@@ -211,7 +211,7 @@ function todoReducer(state: State = [], action: Action): State {
   }
   if (isType(action, removeTodo)) {
     const { id } = action;
-    return state.filter(t => t.id !== id);
+    return state.filter((t) => t.id !== id);
   }
   return state;
 }
@@ -284,7 +284,7 @@ function todoReducer(state: State = [], action: typeof All): State {
     }
     case RemoveTodo.type: {
       const { id } = action;
-      return state.filter(t => t.id !== id);
+      return state.filter((t) => t.id !== id);
     }
   }
   return state;
@@ -304,7 +304,7 @@ function todoReducer(state: State = [], action: Action): State {
   }
   if (isType(action, RemoveTodo)) {
     const { id } = action;
-    return state.filter(t => t.id !== id);
+    return state.filter((t) => t.id !== id);
   }
   return state;
 }

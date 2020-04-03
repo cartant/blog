@@ -25,7 +25,7 @@ RxSpy.log("users");
 
 const names = ["benlesh", "kwonoj", "staltz"];
 const users = Rx.Observable.forkJoin(
-  ...names.map(name =>
+  ...names.map((name) =>
     Rx.Observable.ajax
       .getJSON(`https://api.github.com/users/${name}`)
       .tag(`user-${name}`)

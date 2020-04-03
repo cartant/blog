@@ -27,14 +27,14 @@ import { range } from "rxjs/observable/range";
 import { map, filter, scan, toArray, toPromise } from "rxjs/operators";
 
 const value$ = range(0, 10).pipe(
-  filter(x => x % 2 === 0),
-  map(x => x + x),
+  filter((x) => x % 2 === 0),
+  map((x) => x + x),
   scan((acc, x) => acc + x, 0),
   toArray()
 );
 
 const value = toPromise()(value$);
-value.then(x => console.log(x)); // [0, 4, 12, 24, 40]
+value.then((x) => console.log(x)); // [0, 4, 12, 24, 40]
 ```
 
 The `toPromise` call cannot be placed within the call to `pipe`, as `pipe` will only accept functions that receive and return observables. Instead, it must be called separately.
@@ -48,7 +48,7 @@ import { toPromise } from "rxjs/operators";
 
 const value$ = of("foo");
 const value = toPromise(Bluebird as any)(value$);
-value.then(x => console.log(x)); // "foo"
+value.then((x) => console.log(x)); // "foo"
 ```
 
 An `any` assertion is required because Bluebird does not have a `Symbol.species` property, making TypeScript deem it incompatible with `typeof Promise.`

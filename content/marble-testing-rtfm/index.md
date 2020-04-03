@@ -24,7 +24,7 @@ A simple test looks something like this:
 const a = cold("--1--2--|");
 const asub = "^-------!";
 const expected = "--2--3--|";
-const result = a.map(s => `${Number(s) + 1}`);
+const result = a.map((s) => `${Number(s) + 1}`);
 
 expectObservable(result).toBe(expected);
 expectSubscriptions(a.subscriptions).toBe(asub);
@@ -156,12 +156,12 @@ The package is named `rxjs-marbles` and the code is on [GitHub](https://github.c
 ```ts
 it(
   "should map the values",
-  marbles(m => {
+  marbles((m) => {
     const a = m.cold("--1--2--|");
     const asub = "^-------!";
     const expected = "--2--3--|";
 
-    const result = a.map(s => `${Number(s) + 1}`);
+    const result = a.map((s) => `${Number(s) + 1}`);
     m.expect(result).toBeObservable(expected);
     m.expect(a).toHaveSubscriptions(asub);
   })

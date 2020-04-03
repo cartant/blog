@@ -37,13 +37,13 @@ public removeFromCart = this.actions.pipe(
 And here’s its equivalent `redux-observable` epic:
 
 ```ts
-const removeFromCart = actions$ =>
+const removeFromCart = (actions$) =>
   actions$.pipe(
     ofType(actions.REMOVE_FROM_CART),
-    switchMap(action =>
+    switchMap((action) =>
       backend.removeFromCart(action.payload).pipe(
-        map(response => actions.removeFromCartFulfilled(response)),
-        catchError(error => of(actions.removeFromCartRejected(error)))
+        map((response) => actions.removeFromCartFulfilled(response)),
+        catchError((error) => of(actions.removeFromCartRejected(error)))
       )
     )
   );

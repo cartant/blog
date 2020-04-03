@@ -17,7 +17,7 @@ You can import everything:
 ```ts
 import Rx from "rxjs/Rx";
 
-Rx.Observable.of(1, 2, 3).map(i => i.toString());
+Rx.Observable.of(1, 2, 3).map((i) => i.toString());
 ```
 
 You can import only the methods you need, patching the `Observable` prototype:
@@ -27,7 +27,7 @@ import { Observable } from "rxjs/Observable";
 import "rxjs/add/observable/of";
 import "rxjs/add/operator/map";
 
-Observable.of(1, 2, 3).map(i => i.toString());
+Observable.of(1, 2, 3).map((i) => i.toString());
 ```
 
 Or you can import the methods to be called directly — not via the `Observable` prototype:
@@ -38,7 +38,7 @@ import { of } from "rxjs/observable/of";
 import { map } from "rxjs/operator/map";
 
 const source = of(1, 2, 3);
-const mapped = map.call(source, i => i.toString());
+const mapped = map.call(source, (i) => i.toString());
 ```
 
 Each of these options has its advantages and disadvantages:

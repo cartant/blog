@@ -41,8 +41,8 @@ If the method does use `this`, it can be passed via an arrow function:
 
 ```ts
 return this.http.get<Something>("https://api.some.com/things/1").pipe(
-  map(s => this.extractSomeProperty(s)),
-  catchError(e => this.handleError(e))
+  map((s) => this.extractSomeProperty(s)),
+  catchError((e) => this.handleError(e))
 );
 ```
 

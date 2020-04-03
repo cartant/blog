@@ -34,10 +34,10 @@ const shared = log(source.pipe(shareReplay(1)), "shared");
 
 shared
   .pipe(takeUntil(timer(50)))
-  .subscribe(value => console.log(`first received: ${value}`));
+  .subscribe((value) => console.log(`first received: ${value}`));
 
 setTimeout(
-  () => shared.subscribe(value => console.log(`second received: ${value}`)),
+  () => shared.subscribe((value) => console.log(`second received: ${value}`)),
   150
 );
 ```
@@ -55,7 +55,7 @@ export const log = <T>(source: Observable<T>, name: string) =>
     console.log(`${name}: subscribed`);
     return source.pipe(
       tap({
-        next: value => console.log(`${name}: ${value}`),
+        next: (value) => console.log(`${name}: ${value}`),
         complete: () => console.log(`${name}: complete`)
       }),
       finalize(() => console.log(`${name}: unsubscribed`))
@@ -126,7 +126,7 @@ const shared = log(source.pipe(shareReplay(1)), "shared");
 
 shared
   .pipe(takeUntil(timer(150)))
-  .subscribe(value => console.log(`received: ${value}`));
+  .subscribe((value) => console.log(`received: ${value}`));
 ```
 
 Here a subscription is made to the source and is then unsubscribed — via `takeUntil` — a short while after the source emits its first value.
@@ -190,7 +190,7 @@ const shared = log(
 
 shared
   .pipe(takeUntil(timer(150)))
-  .subscribe(value => console.log(`received: ${value}`));
+  .subscribe((value) => console.log(`received: ${value}`));
 ```
 
 With `refCount` enabled, the source will be unsubscribed when the reference count drops to zero and the source will no longer emit forever:

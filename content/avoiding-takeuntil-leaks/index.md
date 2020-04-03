@@ -34,7 +34,7 @@ declare const notifier: Observable<any>;
 
 const c = a
   .pipe(takeUntil(notifier), combineLatest(b))
-  .subscribe(value => console.log(value));
+  .subscribe((value) => console.log(value));
 ```
 
 And this use of `switchMap` will also leak the subscription to `b`:
@@ -50,9 +50,9 @@ declare const notifier: Observable<any>;
 const c = a
   .pipe(
     takeUntil(notifier),
-    switchMap(_ => b)
+    switchMap((_) => b)
   )
-  .subscribe(value => console.log(value));
+  .subscribe((value) => console.log(value));
 ```
 
 ## Why does it leak?
@@ -68,8 +68,8 @@ declare const b: Observable<number>;
 declare const notifier: Observable<any>;
 
 const c = a
-  .pipe(takeUntil(notifier), o => combineLatest(o, b))
-  .subscribe(value => console.log(value));
+  .pipe(takeUntil(notifier), (o) => combineLatest(o, b))
+  .subscribe((value) => console.log(value));
 ```
 
 When the `notifier` emits, the observable returned by the `takeUntil` operator completes, automatically unsubscribing any subscribers.
@@ -89,8 +89,8 @@ declare const b: Observable<number>;
 declare const notifier: Observable<any>;
 
 const c = a
-  .pipe(o => combineLatest(o, b), takeUntil(notifier))
-  .subscribe(value => console.log(value));
+  .pipe((o) => combineLatest(o, b), takeUntil(notifier))
+  .subscribe((value) => console.log(value));
 ```
 
 Arranged this way, when the `notifier` emits, the subscriber to `c` will be automatically unsubscribed — as the observable returned by `takeUntil` will complete — and the `takeUntil` implementation will unsubscribe from the observable returned by `combineLatest` which, in turn, will unsubscribe from both `a` and `b`.

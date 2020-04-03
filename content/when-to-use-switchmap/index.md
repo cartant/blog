@@ -37,16 +37,16 @@ public findAddresses = createEffect(() => this.actions$.pipe(
 And here’s the [`redux-observable`](https://github.com/redux-observable/redux-observable) epic:
 
 ```ts
-const findAddresses = actions$ =>
+const findAddresses = (actions$) =>
   actions$.pipe(
     ofType(actions.FIND_ADDRESSES),
-    map(action => action.partialAddress),
+    map((action) => action.partialAddress),
     debounceTime(400),
     distinctUntilChanged(),
-    switchMap(partialAddress =>
+    switchMap((partialAddress) =>
       backend.findAddresses(partialAddress).pipe(
-        map(results => actions.findAddressesFulfilled(results)),
-        catchError(error => of(actions.findAddressesRejected(error)))
+        map((results) => actions.findAddressesFulfilled(results)),
+        catchError((error) => of(actions.findAddressesRejected(error)))
       )
     )
   );

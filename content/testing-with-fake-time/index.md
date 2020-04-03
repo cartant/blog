@@ -181,7 +181,7 @@ describe("SomeComponent", () => {
 
   it(
     "should indicate when searching",
-    fakeSchedulers(advance => {
+    fakeSchedulers((advance) => {
       const wrapper = mount(<SomeComponent />);
       expect(wrapper.find(".searching")).toHaveLength(0);
       wrapper.find("input").simulate("change", { target: { value: "foo" } });
@@ -221,7 +221,7 @@ describe("timer", () => {
     "should be testable with fake time",
     fakeSchedulers(() => {
       let received: number | undefined;
-      timer(100).subscribe(value => (received = value));
+      timer(100).subscribe((value) => (received = value));
       clock.tick(50);
       expect(received).to.be.undefined;
       clock.tick(50);

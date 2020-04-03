@@ -28,7 +28,7 @@ will compile to this JavaScript:
 
 ```ts
 var Bool;
-(function(Bool) {
+(function (Bool) {
   Bool[(Bool["True"] = 0)] = "True";
   Bool[(Bool["False"] = 1)] = "False";
   Bool[(Bool["FileNotFound"] = 2)] = "FileNotFound";
@@ -54,7 +54,7 @@ let value = Bool.FileNotFound;
 will compile to this JavaScript:
 
 ```ts
-let value = 2 /* FileNotFound */;
+let value = 2; /* FileNotFound */
 ```
 
 No code is generated for the `enum` declaration. Which is great — it’s just like using a constant — but there is a problem.

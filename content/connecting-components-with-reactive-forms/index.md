@@ -59,7 +59,7 @@ export class UserSearchComponent implements OnDestroy, OnInit {
 
   ngOnInit(): void {
     this._subscription = this.form.valueChanges
-      .map(values => values.username)
+      .map((values) => values.username)
       .subscribe(this.observer);
   }
 }
@@ -88,7 +88,7 @@ export class UserSearchContainer {
     this.users = this._subject
       .debounceTime(1000)
       .distinctUntilChanged()
-      .switchMap(username => this.service.searchUsers(username));
+      .switchMap((username) => this.service.searchUsers(username));
   }
 }
 ```
@@ -106,8 +106,8 @@ export class UserSearchService {
     return username
       ? this._http
           .get(`https://api.github.com/search/users?q=${username}`)
-          .map(response => response.json())
-          .map(content => content.items)
+          .map((response) => response.json())
+          .map((content) => content.items)
       : Observable.of<User[]>([]);
   }
 }

@@ -31,7 +31,7 @@ import { zip } from "rxjs/operators"; // the operator
 Operators are just functions that take an observable and return an observable, so the operators were deprecated and the recommendation was to use the creators instead, like this:
 
 ```ts
-const answers = of(42).pipe(source => zip(source, of(54)));
+const answers = of(42).pipe((source) => zip(source, of(54)));
 ```
 
 Anyway, the above-mentioned operators are being renamed: a `With` suffix is being added — yielding operator names similar to those in [RxJava](http://reactivex.io/RxJava/3.x/javadoc/io/reactivex/rxjava3/core/Observable.html#zipWith-io.reactivex.rxjava3.core.ObservableSource-io.reactivex.rxjava3.functions.BiFunction-) — and they can be used like this:
@@ -57,7 +57,7 @@ We'll use this as our example:
 
 ```ts
 const result = of(Math.random()).pipe(
-  concatMap(value =>
+  concatMap((value) =>
     value < 0.05
       ? of("Yikes, rolled a 1!")
       : value < 0.95

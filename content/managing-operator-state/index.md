@@ -34,7 +34,7 @@ export function debug<T>(): MonoTypeOperatorFunction<T> {
   // the tap operator and maintain our own internal state for the index, as the
   // purpose of our operator is to show that the behaviour depends upon where
   // the state is stored.
-  return tap(t => console.log(`[${++index}]: ${t}`));
+  return tap((t) => console.log(`[${++index}]: ${t}`));
 }
 ```
 
@@ -52,13 +52,9 @@ import { debug } from "./debug";
 
 const op = debug();
 console.log("first use:");
-range(1, 2)
-  .pipe(op)
-  .subscribe();
+range(1, 2).pipe(op).subscribe();
 console.log("second use:");
-range(1, 2)
-  .pipe(op)
-  .subscribe();
+range(1, 2).pipe(op).subscribe();
 ```
 
 The program’s output is:
@@ -115,11 +111,11 @@ import { MonoTypeOperatorFunction, Observable } from "rxjs";
 import { tap } from "rxjs/operators";
 
 export function debug<T>(): MonoTypeOperatorFunction<T> {
-  return source =>
-    new Observable<T>(subscriber => {
+  return (source) =>
+    new Observable<T>((subscriber) => {
       let index = -1;
       return source
-        .pipe(tap(t => console.log(`[${++index}]: ${t}`)))
+        .pipe(tap((t) => console.log(`[${++index}]: ${t}`)))
         .subscribe(subscriber);
     });
 }
@@ -132,10 +128,10 @@ import { defer, MonoTypeOperatorFunction } from "rxjs";
 import { tap } from "rxjs/operators";
 
 export function debug<T>(): MonoTypeOperatorFunction<T> {
-  return source =>
+  return (source) =>
     defer(() => {
       let index = -1;
-      return source.pipe(tap(t => console.log(`[${++index}]: ${t}`)));
+      return source.pipe(tap((t) => console.log(`[${++index}]: ${t}`)));
     });
 }
 ```
@@ -147,7 +143,7 @@ import { MonoTypeOperatorFunction } from "rxjs";
 import { map, scan } from "rxjs/operators";
 
 export function debug<T>(): MonoTypeOperatorFunction<T> {
-  return source =>
+  return (source) =>
     source.pipe(
       scan<T, [T, number]>(([, index], t) => [t, index + 1], [undefined!, -1]),
       map(([t, index]) => (console.log(`[${index}]: ${t}`), t))

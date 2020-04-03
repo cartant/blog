@@ -25,7 +25,7 @@ import { observe } from "rxjs-observe";
 
 const instance = { name: "Alice" };
 const { observables, proxy } = observe(instance);
-observables.name.subscribe(value => console.log(name));
+observables.name.subscribe((value) => console.log(name));
 proxy.name = "Bob";
 ```
 
@@ -68,7 +68,7 @@ class SomeComponent implements OnInit, OnDestroy {
         distinctUntilChanged(),
         takeUntil(observables.ngOnDestroy)
       )
-      .subscribe(value => console.log(value));
+      .subscribe((value) => console.log(value));
     return proxy;
   }
   ngOnInit() {}

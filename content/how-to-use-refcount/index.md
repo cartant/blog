@@ -51,10 +51,10 @@ import { Observable } from "rxjs";
 import { tap } from "rxjs/operators";
 
 function instrument<T>(source: Observable<T>) {
-  return new Observable<T>(observer => {
+  return new Observable<T>((observer) => {
     console.log("source: subscribing");
     const subscription = source
-      .pipe(tap(value => console.log(`source: ${value}`)))
+      .pipe(tap((value) => console.log(`source: ${value}`)))
       .subscribe(observer);
     return () => {
       subscription.unsubscribe();

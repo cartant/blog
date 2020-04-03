@@ -35,7 +35,7 @@ import { delay, mapTo, publish } from "rxjs/operators";
 const source = of(42).pipe(delay(100));
 const published = source.pipe(publish()) as ConnectableObservable<number>;
 const composed = race(published, concat(timer(10).pipe(mapTo(54)), published));
-composed.subscribe(value => console.log(value));
+composed.subscribe((value) => console.log(value));
 published.connect();
 ```
 
@@ -71,11 +71,11 @@ import { delay, mapTo, publish } from "rxjs/operators";
 
 const source = of(42).pipe(delay(100));
 const composed = source.pipe(
-  publish(published =>
+  publish((published) =>
     race(published, concat(timer(10).pipe(mapTo(54)), published))
   )
 );
-composed.subscribe(value => console.log(value));
+composed.subscribe((value) => console.log(value));
 ```
 
 When a selector is specified, the implementation — in [`multicast`](https://github.com/ReactiveX/rxjs/blob/6.4.0/src/internal/operators/multicast.ts#L58-L69) — uses the same mechanism as the initial solution, but does so without a `ConnectableObservable`:
@@ -118,9 +118,9 @@ function startWithTimeout<T, S = T>(
   duration: number | Date,
   scheduler?: SchedulerLike
 ): OperatorFunction<T, S | T> {
-  return source =>
+  return (source) =>
     source.pipe(
-      publish(published =>
+      publish((published) =>
         race(
           published,
           concat(timer(duration, scheduler).pipe(mapTo(value)), published)

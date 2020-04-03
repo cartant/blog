@@ -31,9 +31,7 @@ To enable parent components to connect to the observable, the `awesome-component
 ```ts
 @Component({
   selector: "parent-component",
-  template: `
-    <awesome-component [observer]="observer"></awesome-component>
-  `
+  template: `<awesome-component [observer]="observer"></awesome-component>`
 })
 export class ParentComponent {
   public observer: PartialObserver<any>;
@@ -56,9 +54,7 @@ Subjects are both observers and observables, so if we create a `Subject`, it can
 ```ts
 @Component({
   selector: "parent-component",
-  template: `
-    <awesome-component [observer]="observer"></awesome-component>
-  `
+  template: `<awesome-component [observer]="observer"></awesome-component>`
 })
 export class ParentComponent {
   public observer: PartialObserver<any>;
@@ -67,7 +63,7 @@ export class ParentComponent {
     this._subject = new Subject<any>();
     this._subject
       .pipe(debounceTime(1000), distinctUntilChanged())
-      .subscribe(value => {
+      .subscribe((value) => {
         /* do something with the value */
       });
     this.observer = this._subject;
@@ -84,16 +80,14 @@ By using a `Subject` to compose an observable, the `awesome-component` can be us
 ```ts
 @Component({
   selector: "another-component",
-  template: `
-    <awesome-component [observer]="observer"></awesome-component>
-  `
+  template: `<awesome-component [observer]="observer"></awesome-component>`
 })
 export class AnotherComponent {
   public observer: PartialObserver<any>;
   private _subject: Subject<any>;
   constructor() {
     this._subject = new Subject<any>();
-    this._subject.pipe(last()).subscribe(value => {
+    this._subject.pipe(last()).subscribe((value) => {
       /* do something with the value */
     });
     this.observer = this._subject;
@@ -106,16 +100,14 @@ Interestingly, there is another way that component could choose to receive only 
 ```ts
 @Component({
   selector: "another-component",
-  template: `
-    <awesome-component [observer]="observer"></awesome-component>
-  `
+  template: `<awesome-component [observer]="observer"></awesome-component>`
 })
 export class AnotherComponent {
   public observer: PartialObserver<any>;
   private _subject: Subject<any>;
   constructor() {
     this._subject = new AsyncSubject<any>();
-    this._subject.subscribe(value => {
+    this._subject.subscribe((value) => {
       /* do something with the value */
     });
     this.observer = this._subject;
@@ -157,16 +149,14 @@ To understand the `BehaviorSubject`, let’s have a look at another component-ba
 ```ts
 @Component({
   selector: "parent-component",
-  template: `
-    <awesome-component [observer]="observer"></awesome-component>
-  `
+  template: `<awesome-component [observer]="observer"></awesome-component>`
 })
 export class ParentComponent {
   public observer: PartialObserver<any>;
   private _subject: Subject<any>;
   constructor() {
     this._subject = new Subject<any>();
-    this._subject.pipe(startWith("awesome")).subscribe(value => {
+    this._subject.pipe(startWith("awesome")).subscribe((value) => {
       /* do something with the value */
     });
     this.observer = this._subject;
