@@ -58,11 +58,12 @@ export class SomeComponent {
     this.form = formBuilder.group({
       term: [""]
     });
-    this.term$ = this.form.valueChanges.pipe(
-      pluck("term"),
-      debounceTime(400),
-      distinctUntilChanged()
-    ) as Observable<string>;
+    this.term$ =
+      this.form.valueChanges.pipe(
+        pluck("term"),
+        debounceTime(400),
+        distinctUntilChanged()
+      ) as Observable<string>;
   }
 }
 ```
