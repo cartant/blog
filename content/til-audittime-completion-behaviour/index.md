@@ -9,7 +9,7 @@ cardImage: "./title-card.jpeg"
 
 ![End](title.jpeg "Photo by Markus Spiske on Unsplash")
 
-The `debounceTime` and `auditTime` operators are similar, but different. Each operator ignores intermediate `next` notifications for a specified duration — that defines a time window — and then emits the most-recently received value when that duration elapses.
+The `debounceTime` and `auditTime` operators are similar, but different. Each operator ignores intermediate `next` notifications for a specified duration — that defines a time window — and then emits the most-recently-received value when that duration elapses.
 
 The fundamental difference is that `debounceTime` resets the its internal timer whenever a `next` notification that is received within the time window and `auditTime` time does not.
 
@@ -27,12 +27,16 @@ That's fine. I knew that — that's what's in the docs.
 
 What I didn't know was that the completion behaviour differs.
 
-With `debounceTime`, if completion occurs within the time window, the operator completes immediately and emits the most-recently received value. Like this:
+With `debounceTime`, if completion occurs within the time window, the operator completes immediately and emits the most-recently-received value. Like this:
 
 ![debounceTime with completion](debouncetime-complete-widened.png)
 
-With `auditTime`, if completion occurs within the time window, the operator completes immediately, without emitting the most-recently received value. Like this:
+With `auditTime`, if completion occurs within the time window, the operator completes immediately, without emitting the most-recently-received value. Like this:
 
 ![auditTime with completion](audittime-complete-widened.png)
 
-This makes sense, as `auditTime` only emits when it receives a signal from its notifier — the timer — and its source completes before it receives a signal. However, it wasn't what I had expected.
+The behaviour is understandable, as the purpose of `auditTime` is to emit the audited — the most-recently-received — value when it receives a signal from its notifier — the timer. However, the source completes before the operator receives a signal, so there is no final emission.
+
+`debouceTime` is different. It's purpose is to emit the most-recently-received value after a source has not emitted notifications for the specified duration. If the source completes, the operator can be sure that no further values will be received and the most-recently-received value can be emitted.
+
+It makes sense, but it wasn't what I had expected.
