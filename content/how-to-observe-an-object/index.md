@@ -4,6 +4,7 @@ description: Using proxies to observe properties and methods
 date: "2018-06-14T06:34:34.026Z"
 categories: []
 keywords: []
+ckTags: ["1464979"]
 cardImage: "./title.jpeg"
 slug: /@cartant/rxjs-how-to-observe-an-object-20c47cf51571
 ---

@@ -4,6 +4,7 @@ description: How to avoid unintentional rxjs-compat dependencies
 date: "2019-02-17T07:02:55.500Z"
 categories: []
 keywords: []
+ckTags: ["1464979"]
 cardImage: "./title.jpeg"
 slug: /@cartant/rxjs-avoiding-rxjs-compat-4b79a566359b
 ---

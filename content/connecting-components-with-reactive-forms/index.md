@@ -6,6 +6,7 @@ description: >-
 date: "2017-08-04T06:22:00.299Z"
 categories: []
 keywords: []
+ckTags: ["1464979", "1464982"]
 cardImage: "./title.jpeg"
 slug: /@cartant/connecting-components-with-reactive-forms-55f56fce2aad
 ---

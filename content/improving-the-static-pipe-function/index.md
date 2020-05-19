@@ -4,6 +4,7 @@ description: Adding type-safe support for generics
 date: "2018-05-21T07:15:34.331Z"
 categories: []
 keywords: []
+ckTags: ["1464979", "1464980"]
 cardImage: "./title.jpeg"
 slug: /@cartant/rxjs-improving-the-static-pipe-function-81146fbb14b6
 ---

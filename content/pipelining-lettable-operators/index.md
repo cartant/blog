@@ -4,6 +4,7 @@ description: A look at the TC39 pipeline operator proposal
 date: "2017-09-29T11:18:52.660Z"
 categories: []
 keywords: []
+ckTags: ["1464979"]
 cardImage: "./title.jpeg"
 slug: /@cartant/rxjs-pipelining-lettable-operators-f92f6843d817
 ---

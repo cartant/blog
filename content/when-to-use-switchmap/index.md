@@ -4,6 +4,7 @@ description: Dealing with stale results in effects and epics
 date: "2018-03-13T07:32:57.443Z"
 categories: []
 keywords: []
+ckTags: ["1464979"]
 cardImage: "./title.jpeg"
 slug: /@cartant/when-to-use-switchmap-dfe84ac5a1ff
 ---

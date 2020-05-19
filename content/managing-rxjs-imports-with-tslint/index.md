@@ -4,6 +4,7 @@ description: How to use TSLint to enforce RxJS import policies
 date: "2017-07-21T01:14:07.242Z"
 categories: []
 keywords: []
+ckTags: ["1464979"]
 cardImage: "./title.jpeg"
 slug: /@cartant/managing-rxjs-imports-with-tslint-828cdc66b5ee
 ---

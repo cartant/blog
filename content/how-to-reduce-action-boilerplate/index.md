@@ -4,6 +4,7 @@ description: TypeScript Redux actions with less cruft
 date: "2017-11-07T09:36:23.099Z"
 categories: []
 keywords: []
+ckTags: ["1464980"]
 cardImage: "./title.jpeg"
 slug: /@cartant/how-to-reduce-action-boilerplate-90dc3d389e2b
 ---
