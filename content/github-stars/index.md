@@ -1,6 +1,6 @@
 ---
 title: "How to Find Projects Using GitHub Stars"
-description: A look at how stars can be used to discover and choose projects
+description: "A look at how stars can be used to discover and choose projects"
 date: "2020-02-23T15:24:00+1000"
 categories: []
 keywords: []

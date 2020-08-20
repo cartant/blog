@@ -1,12 +1,12 @@
 ---
 title: "RxJS: Avoiding takeUntil Leaks"
-description: How to unsubscribe without leaking subscriptions
+description: "How to unsubscribe without leaking subscriptions"
 date: "2018-05-27T08:05:50.804Z"
 categories: []
 keywords: []
 ckTags: ["1464979"]
 cardImage: "./title.jpeg"
-slug: /@cartant/rxjs-avoiding-takeuntil-leaks-fb5182d047ef
+slug: "/@cartant/rxjs-avoiding-takeuntil-leaks-fb5182d047ef"
 ---
 
 ![Traffic light](title.jpeg "Photo by Tim Gouw on Unsplash")

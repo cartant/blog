@@ -1,6 +1,6 @@
 ---
 title: "TypeScript: Don’t Export const enums"
-description: Exporting const enums from libraries will break some users
+description: "Exporting const enums from libraries will break some users"
 date: "2019-12-14T10:36:00+1000"
 categories: []
 keywords: []

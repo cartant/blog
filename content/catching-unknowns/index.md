@@ -1,6 +1,6 @@
 ---
 title: "Catching Unknowns"
-description: Lint rules for type-safe catching
+description: "Lint rules for type-safe catching"
 date: "2020-07-14T10:41:00+1000"
 categories: []
 keywords: []

@@ -1,6 +1,6 @@
 ---
 title: "RxJS: Reporting API Usage"
-description: How to help the core team by reporting your project's API usage
+description: "How to help the core team by reporting your project's API usage"
 date: "2020-06-22T15:22:00+1000"
 categories: []
 keywords: []

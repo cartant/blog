@@ -1,6 +1,6 @@
 ---
 title: "RxJS Community Packages"
-description: A website for user-land RxJS packages
+description: "A website for user-land RxJS packages"
 date: "2020-05-22T15:50:00.002Z"
 categories: []
 keywords: []

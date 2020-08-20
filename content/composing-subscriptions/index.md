@@ -1,12 +1,12 @@
 ---
 title: "RxJS: Composing Subscriptions"
-description: Coordinating unsubscription using composition
+description: "Coordinating unsubscription using composition"
 date: "2018-02-16T04:37:40.717Z"
 categories: []
 keywords: []
 ckTags: ["1464979"]
 cardImage: "./title.jpeg"
-slug: /@cartant/rxjs-composing-subscriptions-b53ab22f1fd5
+slug: "/@cartant/rxjs-composing-subscriptions-b53ab22f1fd5"
 ---
 
 ![Matryoshka dolls](title.jpeg "Photo by Bradley Davis on Flickr")

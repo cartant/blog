@@ -1,12 +1,12 @@
 ---
 title: "RxJS: Understanding Subjects"
-description: What are subjects and how should they be used?
+description: "What are subjects and how should they be used?"
 date: "2018-02-02T02:04:48.357Z"
 categories: []
 keywords: []
 ckTags: ["1464979"]
 cardImage: "./title.jpeg"
-slug: /@cartant/rxjs-understanding-subjects-5c585188c3e1
+slug: "/@cartant/rxjs-understanding-subjects-5c585188c3e1"
 ---
 
 ![Spanner](title.jpeg "Photo by Matt Artz on Unsplash")

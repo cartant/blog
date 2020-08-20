@@ -1,12 +1,12 @@
 ---
 title: "RxJS: multicast’s Secret"
-description: Multicasting without a connectable observable
+description: "Multicasting without a connectable observable"
 date: "2017-08-19T12:55:19.002Z"
 categories: []
 keywords: []
 ckTags: ["1464979"]
 cardImage: "./title.jpeg"
-slug: /@cartant/rxjs-multicasts-secret-760e1a2b176e
+slug: "/@cartant/rxjs-multicasts-secret-760e1a2b176e"
 ---
 
 ![Test pattern](title.jpeg "Photo by Tim Mossholder on Unsplash")

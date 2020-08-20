@@ -1,12 +1,12 @@
 ---
 title: "RxJS: Understanding the publish and share Operators"
-description: An in-depth look at multicasting
+description: "An in-depth look at multicasting"
 date: "2017-08-23T11:57:58.557Z"
 categories: []
 keywords: []
 ckTags: ["1464979"]
 cardImage: "./title.jpeg"
-slug: /@cartant/rxjs-understanding-the-publish-and-share-operators-16ea2f446635
+slug: "/@cartant/rxjs-understanding-the-publish-and-share-operators-16ea2f446635"
 ---
 
 ![Books](title.jpeg "Photo by Kimberly Farmer on Unsplash")

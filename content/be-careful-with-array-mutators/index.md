@@ -1,12 +1,12 @@
 ---
-title: Be Careful with Array Mutators
-description: Assigning mutated arrays can lead to surprises
+title: "Be Careful with Array Mutators"
+description: "Assigning mutated arrays can lead to surprises"
 date: "2019-02-21T22:04:44.988Z"
 categories: []
 keywords: []
 ckTags: []
 cardImage: "./title.jpeg"
-slug: /@cartant/be-careful-with-array-mutators-2d5231351cf8
+slug: "/@cartant/be-careful-with-array-mutators-2d5231351cf8"
 ---
 
 ![Different pumpkins](title.jpeg "Photo by Corinne Kutz on Unsplash")

@@ -1,12 +1,12 @@
 ---
 title: "RxJS: How to Use Lettable Operators and Promises"
-description: A look at lettable operators and the toPromise function
+description: "A look at lettable operators and the toPromise function"
 date: "2017-10-03T10:45:58.165Z"
 categories: []
 keywords: []
 ckTags: ["1464979"]
 cardImage: "./title.jpeg"
-slug: /@cartant/rxjs-how-to-use-lettable-operators-and-promises-2e717313bf76
+slug: "/@cartant/rxjs-how-to-use-lettable-operators-and-promises-2e717313bf76"
 ---
 
 ![Glove on a picket](title.jpeg "Photo by Gary Bendig on Unsplash")

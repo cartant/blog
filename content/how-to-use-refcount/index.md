@@ -1,12 +1,12 @@
 ---
 title: "RxJS: How to Use refCount"
-description: An in-depth look at the refCount operator
+description: "An in-depth look at the refCount operator"
 date: "2017-09-03T11:23:11.086Z"
 categories: []
 keywords: []
 ckTags: ["1464979"]
 cardImage: "./title.jpeg"
-slug: /@cartant/rxjs-how-to-use-refcount-73a0c6619a4e
+slug: "/@cartant/rxjs-how-to-use-refcount-73a0c6619a4e"
 ---
 
 ![Table numbers](title.jpeg "Photo by Mike Wilson on Unsplash")

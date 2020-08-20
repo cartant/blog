@@ -1,6 +1,6 @@
 ---
 title: "RxJS: How to Use request​Idle​Callback"
-description: Thoughts on how request​Idle​Callback could be used
+description: "Thoughts on how request​Idle​Callback could be used"
 date: "2020-06-26T13:10:00+1000"
 categories: []
 keywords: []

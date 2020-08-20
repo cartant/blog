@@ -6,7 +6,7 @@ categories: []
 keywords: []
 ckTags: ["1464979"]
 cardImage: "./title.jpeg"
-slug: /@cartant/rxjs-tslint-rules-for-version-6-d10e2482292d
+slug: "/@cartant/rxjs-tslint-rules-for-version-6-d10e2482292d"
 ---
 
 ![Surveillance cameras](title.jpeg "Photo by Scott Webb on Unsplash")

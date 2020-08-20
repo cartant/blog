@@ -1,12 +1,12 @@
 ---
 title: "RxJS: Avoiding rxjs-compat"
-description: How to avoid unintentional rxjs-compat dependencies
+description: "How to avoid unintentional rxjs-compat dependencies"
 date: "2019-02-17T07:02:55.500Z"
 categories: []
 keywords: []
 ckTags: ["1464979"]
 cardImage: "./title.jpeg"
-slug: /@cartant/rxjs-avoiding-rxjs-compat-4b79a566359b
+slug: "/@cartant/rxjs-avoiding-rxjs-compat-4b79a566359b"
 ---
 
 ![Stacked cups](title.jpeg "Photo by Monika Stawowy on Unsplash")

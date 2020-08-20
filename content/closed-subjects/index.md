@@ -1,12 +1,12 @@
 ---
 title: "RxJS: Closed Subjects"
-description: A look at subject unsubscription
+description: "A look at subject unsubscription"
 date: "2018-02-06T11:42:09.818Z"
 categories: []
 keywords: []
 ckTags: ["1464979"]
 cardImage: "./title.jpeg"
-slug: /@cartant/rxjs-closed-subjects-1b6f76c1b63c
+slug: "/@cartant/rxjs-closed-subjects-1b6f76c1b63c"
 ---
 
 ![Closed sign](title.jpeg "Photo by Tim Mossholder on Unsplash")

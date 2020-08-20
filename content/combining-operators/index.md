@@ -1,12 +1,12 @@
 ---
 title: "RxJS: Combining Operators"
-description: How to use the static pipe function
+description: "How to use the static pipe function"
 date: "2018-05-14T07:30:49.115Z"
 categories: []
 keywords: []
 ckTags: ["1464979"]
 cardImage: "./title.jpeg"
-slug: /@cartant/rxjs-combining-operators-397bad0628d0
+slug: "/@cartant/rxjs-combining-operators-397bad0628d0"
 ---
 
 ![Plastic rainbow](title.jpeg "Photo by Daniele Levis Pelusi on Unsplash")

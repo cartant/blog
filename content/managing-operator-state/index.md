@@ -1,12 +1,12 @@
 ---
 title: "RxJS: Managing Operator State"
-description: How to avoid problems with operators that store state
+description: "How to avoid problems with operators that store state"
 date: "2019-02-11T20:34:01.280Z"
 categories: []
 keywords: []
 ckTags: ["1464979"]
 cardImage: "./title.jpeg"
-slug: /@cartant/rxjs-managing-operator-state-2f20681df21d
+slug: "/@cartant/rxjs-managing-operator-state-2f20681df21d"
 ---
 
 ![Shipping container](title.jpeg "Photo by Victoire Joncheray on Unsplash")

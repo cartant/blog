@@ -1,6 +1,6 @@
 ---
 title: "RxJS: Understanding fromFetch"
-description: A look at how fromFetch uses fetch and AbortController
+description: "A look at how fromFetch uses fetch and AbortController"
 date: "2020-05-19T17:17:00+1000"
 categories: []
 keywords: []

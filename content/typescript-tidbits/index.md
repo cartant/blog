@@ -1,12 +1,12 @@
 ---
-title: TypeScript Tidbits
-description: What building ts-action taught me about TypeScript
+title: "TypeScript Tidbits"
+description: "What building ts-action taught me about TypeScript"
 date: "2018-02-01T22:56:42.486Z"
 categories: []
 keywords: []
 ckTags: ["1464980"]
 cardImage: "./title.jpeg"
-slug: /@cartant/typescript-tidbits-b89a022a6b19
+slug: "/@cartant/typescript-tidbits-b89a022a6b19"
 ---
 
 ![Macarons](title.jpeg "Photo by Tatiana Lapina on Unsplash")

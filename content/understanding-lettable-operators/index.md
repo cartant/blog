@@ -1,12 +1,12 @@
 ---
 title: "RxJS: Understanding Lettable Operators"
-description: An overview of lettable operators
+description: "An overview of lettable operators"
 date: "2017-09-26T09:14:32.003Z"
 categories: []
 keywords: []
 ckTags: ["1464979"]
 cardImage: "./title.jpeg"
-slug: /@cartant/rxjs-understanding-lettable-operators-fe74dda186d3
+slug: "/@cartant/rxjs-understanding-lettable-operators-fe74dda186d3"
 ---
 
 ![Mixing console](title.jpeg "Photo by Steven Wang on Unsplash")

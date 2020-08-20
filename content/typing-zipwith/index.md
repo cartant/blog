@@ -1,6 +1,6 @@
 ---
 title: "RxJS: Typing zipWith"
-description: A look at how the TypeScript signature for zipWith works
+description: "A look at how the TypeScript signature for zipWith works"
 date: "2020-02-10T18:36:00+1000"
 categories: []
 keywords: []
@@ -79,7 +79,7 @@ assignable to type 'ObservableInput<number>'.
 
 The problem is that the projection function passed to `concatMap` returns either an `Observable<number>` or an `Observable<string>` — depending upon the roll — and it's not possible (or safe) for TypeScript to determine that `Observable<number | string>` is what should be inferred. Well, not without some help.
 
-In January 2019, Google's [Alex Rickabaugh](https://github.com/alxhub) — he's on the Angular team — came up with a solution: the `ObservedValueOf` type. And it looks like this:
+In January 2019, Google's [Alex Rickabaugh](https://mobile.twitter.com/synalx) — he's on the Angular team — came up with a solution: the `ObservedValueOf` type. And it looks like this:
 
 <!-- prettier-ignore -->
 ```ts

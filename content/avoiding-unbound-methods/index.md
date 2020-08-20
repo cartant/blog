@@ -1,12 +1,12 @@
 ---
 title: "RxJS: Avoiding Unbound Methods"
-description: Using a TSLint rule to avoid passing unbound methods
+description: "Using a TSLint rule to avoid passing unbound methods"
 date: "2018-06-30T07:20:27.713Z"
 categories: []
 keywords: []
 ckTags: ["1464979"]
 cardImage: "./title.jpeg"
-slug: /@cartant/rxjs-avoiding-unbound-methods-fcf2648a805
+slug: "/@cartant/rxjs-avoiding-unbound-methods-fcf2648a805"
 ---
 
 ![Mops](title.jpeg "Photo by pan xiaozhen on Unsplash")

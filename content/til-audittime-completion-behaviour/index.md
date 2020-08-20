@@ -1,6 +1,6 @@
 ---
 title: "TIL: auditTime’s Completion Behaviour Is Unlike debounceTime’s"
-description: Similar, but different. But similar.
+description: "Similar, but different. But similar."
 date: "2020-04-28T14:29:00+1000"
 categories: []
 keywords: []

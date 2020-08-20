@@ -1,12 +1,12 @@
 ---
 title: "RxJS: How to Use Type Guards with Observables"
-description: Using type guards for run-time validation
+description: "Using type guards for run-time validation"
 date: "2017-09-11T05:19:34.415Z"
 categories: []
 keywords: []
 ckTags: ["1464979", "1464980"]
 cardImage: "./title.jpeg"
-slug: /@cartant/rxjs-how-to-use-type-guards-with-observables-11cc4d4f380f
+slug: "/@cartant/rxjs-how-to-use-type-guards-with-observables-11cc4d4f380f"
 ---
 
 ![Chain-link fence](title.jpeg "Photo by Tanner Van Dera on Unsplash")

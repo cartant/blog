@@ -1,12 +1,12 @@
 ---
 title: "RxJS: What’s Changed with shareReplay?"
-description: A look at the change made in RxJS version 6.4.0
+description: "A look at the change made in RxJS version 6.4.0"
 date: "2019-02-14T12:08:19.659Z"
 categories: []
 keywords: []
 ckTags: ["1464979"]
 cardImage: "./title.jpeg"
-slug: /@cartant/rxjs-whats-changed-with-sharereplay-65c098843e95
+slug: "/@cartant/rxjs-whats-changed-with-sharereplay-65c098843e95"
 ---
 
 ![Cassette tape](title.jpeg "Photo by Namroud Gorguis on Unsplash")

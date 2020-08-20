@@ -1,12 +1,12 @@
 ---
 title: "RxJS: Testing with Fake Time"
-description: How to test using fakeAsync or useFakeTimers
+description: "How to test using fakeAsync or useFakeTimers"
 date: "2018-06-27T04:19:35.603Z"
 categories: []
 keywords: []
 ckTags: ["1464979"]
 cardImage: "./title.jpeg"
-slug: /@cartant/rxjs-testing-with-fake-time-94114271eed2
+slug: "/@cartant/rxjs-testing-with-fake-time-94114271eed2"
 ---
 
 ![Toy gun](title.jpeg "Photo by rawpixel on Unsplash")

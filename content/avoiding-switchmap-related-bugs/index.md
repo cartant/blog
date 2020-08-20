@@ -1,12 +1,12 @@
 ---
 title: "RxJS: Avoiding switchMap-related Bugs"
-description: Using switchMap is unsafe in many effects and epics
+description: "Using switchMap is unsafe in many effects and epics"
 date: "2018-03-12T12:01:27.057Z"
 categories: []
 keywords: []
 ckTags: ["1464979"]
 cardImage: "./title.jpeg"
-slug: /@cartant/switchmap-bugs-b6de69155524
+slug: "/@cartant/switchmap-bugs-b6de69155524"
 ---
 
 ![Shopping trolley](title.jpeg)

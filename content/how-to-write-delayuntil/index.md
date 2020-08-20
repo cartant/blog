@@ -1,6 +1,6 @@
 ---
 title: "RxJS: How to Write a delayUntil Operator"
-description: A step-by-step breakdown of writing an operator that uses a notifier
+description: "A step-by-step breakdown of writing an operator that uses a notifier"
 date: "2020-02-24T19:05:00+1000"
 categories: []
 keywords: []
