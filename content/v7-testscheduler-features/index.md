@@ -20,7 +20,7 @@ Let's take a look at a test to see the problem:
 
 ```ts
 const testScheduler = new TestScheduler((a, e) => expect(a).toStrictEqual(e));
-testScheduler.run(({ cold, expectObservable, time }) => {
+testScheduler.run(({ expectObservable, time }) => {
   const tb = time(" ------|  ");
   const expected = "(acd)-b--";
 
@@ -48,7 +48,7 @@ Putting the `animationFrameScheduler` to one side, the passing test would look l
 
 ```ts
 const testScheduler = new TestScheduler((a, e) => expect(a).toStrictEqual(e));
-testScheduler.run(({ cold, expectObservable, time }) => {
+testScheduler.run(({ expectObservable, time }) => {
   const tb = time(" ------|  ");
   const expected = "(dc)--b--";
 
@@ -79,7 +79,7 @@ It's a new function that has been added to the run helpers and it can be used li
 
 ```ts
 const testScheduler = new TestScheduler((a, e) => expect(a).toStrictEqual(e));
-testScheduler.run(({ animate, cold, expectObservable, time }) => {
+testScheduler.run(({ animate, expectObservable, time }) => {
   animate("         --------x");
   const tb = time(" ------|  ");
   const expected = "(dc)--b-a";
@@ -123,13 +123,13 @@ In a test, we can use the `animates` helper to control when animation frames occ
 ```ts
 const testScheduler = new TestScheduler((a, e) => expect(a).toStrictEqual(e));
 testScheduler.run(({ animate, expectObservable, time }) => {
-  animate("            -----x--x--x");
-  const subs = "       --^--------!";
-  const ts = time("    --|         ");
-  const ta = time("    -----|      ");
-  const tb = time("    --------|   ");
-  const tc = time("    -----------|");
-  const expected = "   -----a--b--c";
+  animate("         -----x--x--x");
+  const subs = "    --^--------!";
+  const ts = time(" --|         ");
+  const ta = time(" -----|      ");
+  const tb = time(" --------|   ");
+  const tc = time(" -----------|");
+  const expected = "-----a--b--c";
 
   const result = animationFrames();
   expectObservable(result, subs).toBe(expected, {
