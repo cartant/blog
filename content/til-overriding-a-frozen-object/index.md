@@ -35,20 +35,20 @@ module.exports = {
 };
 ```
 
-Here, the `context`'s `options` property is overwritten before it's passed to the base rule's `create` function. However, that fails with an error:
+Here, `context`'s `options` property is overwritten before it's passed to the base rule's `create` function. However, that fails with an error:
 
 ```text
 TypeError: Error while loading rule 'no-array-foreach': Cannot assign to read only
 property 'options' of object '#<Object>'
 ```
 
-The property is read-only because ESLint [calls `Object.freeze`](https://github.com/eslint/eslint/blob/82669fa66670a00988db5b1d10fe8f3bf30be84e/lib/linter/linter.js#L893-L929) on the `context` before passing it the the rule's `create` function.
+The property is read-only because ESLint [calls `Object.freeze`](https://github.com/eslint/eslint/blob/82669fa66670a00988db5b1d10fe8f3bf30be84e/lib/linter/linter.js#L893-L929) on `context` before passing it the the rule's `create` function.
 
-To work around this, it's necessary to create a new object that includes the `options`, along with all of the other properties in the `context`. And there are a number of ways that can be done.
+To work around this, it's necessary to create a new object that includes the `options`, along with all of the other properties on `context`. And there are a number of ways that can be done.
 
 ## Spread Syntax
 
-When the spread syntax is used, all of the `context`'s (own) properties are spread into the new object — `contextForBaseRule` — along with the specified `options`, like this:
+When the spread syntax is used, all of `context`'s (own) properties are spread into the new object — `contextForBaseRule` — along with the specified `options`, like this:
 
 ```js{6-12}
 const baseRule = require("./no-foreach");
@@ -66,7 +66,7 @@ module.exports = {
 };
 ```
 
-There is a problem with this, though: it breaks the prototype chain. That's not an issue with the `options` and `report` properties — they're _own_ properties on the `context` — however, the `context` has a bunch of other properties that are on its prototype and, with that implementation, the rule fails with an error:
+There is a problem with this, though: it breaks the prototype chain. That's not an issue with the `options` and `report` properties — they're _own_ properties on `context` — however, `context` has a bunch of other properties that are on its prototype and, with that implementation, the rule fails with an error:
 
 ```text
 Error while loading rule 'no-array-foreach': You have used a rule which requires
@@ -74,7 +74,7 @@ parserServices to be generated. You must therefore provide a value for the
 "parserOptions.project" property for @typescript-eslint/parser.
 ```
 
-`parserOptions` is one of the properties that's on the `context`'s prototype and it's needed within the rule to retrieve the TypeScript node that corresponds to an ESLint node.
+`parserOptions` is one of the properties that's on `context`'s prototype and it's needed within the rule to retrieve the TypeScript node that corresponds to an ESLint node.
 
 ## Proxy
 
@@ -100,7 +100,7 @@ module.exports = {
 };
 ```
 
-Here, a `get` handler is specified and when a property is accessed, it checks the property name. If it's `"options"`, it returns the options that need to be passed to the base rule. Otherwise, it returns the value of the `context` property.
+Here, a `get` handler is specified and when a property is accessed, it checks the property name. If it's `"options"`, it returns the options that need to be passed to the base rule. Otherwise, it returns the value of `context`'s property.
 
 However, that doesn't work either. It fails with this error:
 
