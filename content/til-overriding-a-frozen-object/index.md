@@ -184,6 +184,6 @@ Once that's done the rule works:
 
 - When the base rule accesses the `options` property, it finds the property on `contextForBaseRule` — which overrides the `options` property on `context`.
 - When the base rule calls the `report` method, it finds the method on `context` — which is the prototype for `contextForBaseRule`.
-- And when the base rule accesses the `parserOptions` property, it finds the property on `context` object's prototype.
+- And when the base rule accesses the `parserOptions` property, it finds the property on `context`'s prototype.
 
 For something that I'd expected to be straightforward, a surprising number of attempts were needed to get this working. 😅 However, I did learn some things along the way.
