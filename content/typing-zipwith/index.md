@@ -73,8 +73,8 @@ It might look a little contrived, but situations often arise in NgRx and `redux-
 In RxJS version 6.3, the snippet would not have compiled and the following error would have been effected:
 
 ```text
-Type 'Observable<number> | Observable<string>' is not
-assignable to type 'ObservableInput<number>'.
+Type 'Observable<number> | Observable<string>' is not assignable
+to type 'ObservableInput<number>'.
 ```
 
 The problem is that the projection function passed to `concatMap` returns either an `Observable<number>` or an `Observable<string>` — depending upon the roll — and it's not possible (or safe) for TypeScript to determine that `Observable<number | string>` is what should be inferred. Well, not without some help.

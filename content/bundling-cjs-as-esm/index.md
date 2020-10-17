@@ -17,7 +17,8 @@ The problem surfaced with the release of Angular 10. When a non-ES module depend
 ```text
 WARNING in some-app depends on 'rxjs-spy/operators'.
 CommonJS or AMD dependencies can cause optimization bailouts.
-For more info see: https://angular.io/guide/build#configuring-commonjs-dependencies
+For more info see:
+https://angular.io/guide/build#configuring-commonjs-dependencies
 ```
 
 To prevent this, the `rxjs-spy` distribution needs to include a `module` entry in its `package.json` — referencing an ES module export.

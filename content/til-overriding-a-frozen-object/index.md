@@ -38,8 +38,8 @@ module.exports = {
 Here, `context`'s `options` property is overwritten before it's passed to the base rule's `create` function. However, that fails with an error:
 
 ```text
-TypeError: Error while loading rule 'no-array-foreach': Cannot assign to read only
-property 'options' of object '#<Object>'
+TypeError: Error while loading rule 'no-array-foreach': Cannot assign
+to read only property 'options' of object '#<Object>'
 ```
 
 The property is read-only because ESLint [calls `Object.freeze`](https://github.com/eslint/eslint/blob/82669fa66670a00988db5b1d10fe8f3bf30be84e/lib/linter/linter.js#L893-L929) on `context` before passing it the the rule's `create` function.
@@ -69,9 +69,10 @@ module.exports = {
 There is a problem with this, though: it breaks the prototype chain. That's not an issue with the `options` and `report` properties — they're _own_ properties on `context` — however, `context` has a bunch of other properties that are on its prototype and, with that implementation, the rule fails with an error:
 
 ```text
-Error while loading rule 'no-array-foreach': You have used a rule which requires
-parserServices to be generated. You must therefore provide a value for the
-"parserOptions.project" property for @typescript-eslint/parser.
+Error while loading rule 'no-array-foreach': You have used a rule
+which requires parserServices to be generated. You must therefore
+provide a value for the "parserOptions.project" property for
+@typescript-eslint/parser.
 ```
 
 `parserOptions` is one of the properties that's on `context`'s prototype and it's needed within the rule to retrieve the TypeScript node that corresponds to an ESLint node.
@@ -105,10 +106,10 @@ Here, a `get` handler is specified and when a property is accessed, it checks th
 However, that doesn't work either. It fails with this error:
 
 ```text
-TypeError: Error while loading rule 'no-array-foreach': 'get' on proxy: property
-'options' is a read-only and non-configurable data property on the proxy target but
-the proxy did not return its actual value (expected '[object Array]' but got
-'[object Array]')
+TypeError: Error while loading rule 'no-array-foreach': 'get' on
+proxy: property 'options' is a read-only and non-configurable data
+property on the proxy target but the proxy did not return its actual
+value (expected '[object Array]' but got '[object Array]')
 ```
 
 The reason for this is that the [invariants](https://www.ecma-international.org/ecma-262/11.0/index.html#sec-invariants-of-the-essential-internal-methods) outlined in the ECMAScript specification are enforced by the `Proxy` implementation:
@@ -144,8 +145,8 @@ module.exports = {
 However, that won't work and will fail with this error:
 
 ```text
-TypeError: Error while loading rule 'no-array-foreach': Cannot assign to read only
-property 'options' of object '#<Object>'
+TypeError: Error while loading rule 'no-array-foreach': Cannot assign
+to read only property 'options' of object '#<Object>'
 ```
 
 This surprised me. I expected the `options` property to be added to the created object — regardless of the fact that there is an `options` property on the prototype.
