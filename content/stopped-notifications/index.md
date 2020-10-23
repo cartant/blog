@@ -1,7 +1,7 @@
 ---
 title: "RxJS: Stopped Notifications"
 description: "How to reconfigure stopped notification behaviour"
-date: "2020-10-01T16:33:00+1000"
+date: "2020-10-23T14:41:00+1000"
 categories: []
 keywords: []
 ckTags: ["1464979"]
@@ -17,11 +17,11 @@ RxJS — and Rx in general — offers a bunch of guarantees that make it
 
 There is more information about this in the [Observable Contract](http://reactivex.io/documentation/contract.html).
 
-The guarantees allow for the declarative composition of observable chains: developers can focus on composing behaviours rather than keeping track of state. Without the guarantees, developers would be checking for errors and completion and composition would be much more difficult.
+The guarantees allow for the declarative composition of observable chains: developers can focus on composing behaviours rather than keeping track of state. Without the guarantees, developers would be checking for errored or completed sources and composition would be more difficult.
 
-One quirk that stems from these guarantees is that it's possible for an error channel to be closed. For example, if an error occurs when an observable is being torn down, it's not possible for that error to be reported to the observer — the observer will have already received a `complete` or `error` notification or will have already been explicitly unsubscribed. In RxJS, observers in this state are referred to as _stopped_.
+A quirk that stems from these guarantees is that it's possible for an error channel to be closed. For example, if an error occurs when an observable is being torn down, it's not possible for that error to be reported to the observer — the observer will have already received a `complete` or `error` notification or will have already been explicitly unsubscribed. In RxJS, observers in this state are referred to (internally) as _stopped_.
 
-The way this situation has been dealt with has changed, over the last few RxJS versions.
+Over the last few RxJS versions, the way this situation has been dealt with has changed.
 
 ## Version 5
 
@@ -37,7 +37,7 @@ This behaviour made determining the cause of a couple of bugs in the core librar
 
 ## Version 7
 
-In version 7, this traversal is no longer performed. In all situations — not just in `subscribe` — errors are sent to the observer as notifications. However, if the observer is stopped, the notification is then sent to a configurable function, allowing the developer to take an appropriate action. If no configuration is provided, the stopped notifications are swallowed.
+In version 7, the traversal will no longer be performed. In all situations, errors will be sent to observers as notifications. However, if the observer is stopped, the notification will then be sent to a configurable function, allowing the developer to take an appropriate action. If no configuration is provided — the default — the stopped notifications will be swallowed.
 
 An example configuration looks like this:
 
@@ -56,8 +56,8 @@ config.onStoppedNotification = (notification) => {
 };
 ```
 
-Here, any error notification that cannot be sent to an observer — because it is stopped — is thrown as an unhandled error.
+Here, any error notification that cannot be sent to an observer — because it is stopped — will be thrown as an unhandled error.
 
-Note that a `next` or `complete` notification that cannot be sent to an observer is also routed to any configured `onStoppedNotification` handler. Generally, you won't need to be concerned with those, but their being exposed can be helpful — especially, if you are building your own observable source and are investigating weird behaviour.
+Note that a `next` or `complete` notification that cannot be sent to an observer will also be routed to any configured `onStoppedNotification` handler. Generally, you won't need to be concerned with those, but their being exposed can be helpful — especially, if you are building your own observable source and are investigating weird behaviour.
 
-To sum up, the new `config` option lets developers decide what should be done with errors that cannot be sent to observers and it has also allowed us to simplify the codebase a little. And swallowed errors are probably my number one pet peeve, so ... ❤
+To sum up, the new `config` option will let developers decide what should be done with errors that cannot be sent to observers and it has also allowed us to simplify the codebase a little. And swallowed errors are probably my number-one pet peeve, so ... ❤
