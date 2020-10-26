@@ -108,5 +108,3 @@ The rule will suggest `useMemo` whenever the function passed to `useEffect`:
 The heuristic identifies the `useEffect` usage in Sophie's tweet — and suggests `useMemo` as a replacement — and it hasn't effected any false positives in the code bases over which I've run the rule. The rule's tests include some of the [use cases](https://github.com/cartant/eslint-plugin-react-etc/blob/4a2a2a60d3e04076d647410ea5516c49a943cfb2/tests/rules/prefer-usememo.ts#L39-L174) for which the rule will not suggest `useMemo` as a replacement.
 
 The rule is implemented in TypeScript — there are other React lint rules that I'll be adding to [`eslint-plugin-react-etc`](https://github.com/cartant/eslint-plugin-react-etc) and they will take advantage of information from the type system — but it doesn't rely upon TypeScript-specific AST nodes, so it will work just fine with ESLint configurations that do not use the TypeScript parser.
-
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
