@@ -56,7 +56,7 @@ declare const read: (
 
 _IIFEs aren't the only scenario in which inlining can occur. They're used here so that inlining can be demonstrated in the TypeScript playground._
 
-Inlining something that won't happen with interfaces, as interfaces are always referred to by name. If an interface is scoped in a similar manner, [like this](https://www.typescriptlang.org/play?#code/MYewdgzgLgBATgUwIYBMYF4YAosEoMB8MA3gFAwwCWYUCcAZksAjAErIoDCSANjwEZMA1iWygaCGgC4Y0ONQDmuGXMUBuGAF815eAigBXOGBj0DYYFErhsAByRQAFiqjywCgDQxgvAcJnsqNx8gsBC+MTapJq4eGpAA):
+Inlining is something that won't happen with interfaces, as interfaces are always referred to by name. If an interface is scoped in a similar manner, [like this](https://www.typescriptlang.org/play?#code/MYewdgzgLgBATgUwIYBMYF4YAosEoMB8MA3gFAwwCWYUCcAZksAjAErIoDCSANjwEZMA1iWygaCGgC4Y0ONQDmuGXMUBuGAF815eAigBXOGBj0DYYFErhsAByRQAFiqjywCgDQxgvAcJnsqNx8gsBC+MTapJq4eGpAA):
 
 ```ts
 const read = (() => {
