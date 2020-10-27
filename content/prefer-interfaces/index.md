@@ -75,7 +75,7 @@ Exported variable 'read' has or is using private name 'ReadCallback'.
 
 Interfaces aren't inlined. They are referred to by name and if the name is private, compilation will fail.
 
-In early versions of TypeScript, the behavioural differences between type aliases and interfaces was significant. However, in recent versions there is less of a distinction and that has led to some developers preferring type aliases over interfaces.
+In early versions of TypeScript, the behavioural differences between type aliases and interfaces were significant. However, in recent versions there is less of a distinction and that has led to some developers preferring type aliases over interfaces.
 
 The performance problems mentioned in Rob's thread suggest that perhaps interfaces should be preferred. And [Daniel Rosenwasser's endorsement](https://twitter.com/drosenwasser/status/1319205169918144513) of interfaces is emphatic:
 
@@ -83,4 +83,4 @@ The performance problems mentioned in Rob's thread suggest that perhaps interfac
 >
 > We tried for a long time to paper over the distinction because of people's personal choices, but ultimately unless we actually simplify the types internally (could happen) they're not really the same, and interfaces behave better.
 
-For developers interested in ensuring that interfaces are used wherever possible, I've added a [`prefer-interface` ESLint rule](https://github.com/cartant/eslint-plugin-etc/blob/cab3ae77a8ffe41922842ea09d01733fb9fccf71/docs/rules/prefer-interface.md) to [`eslint-plugin-etc`](https://github.com/cartant/eslint-plugin-etc). It will effect a lint failure whenever it finds a type alias declaration that could be declared as an interface. The rule has a fixer — and a suggestion — and can replace type alias declarations automatically.
+For developers interested in ensuring that interfaces are used wherever possible, I've added a [`prefer-interface` ESLint rule](https://github.com/cartant/eslint-plugin-etc/blob/5c2646a397dc2e174b23587af4daa9f1f9047d5f/docs/rules/prefer-interface.md) to [`eslint-plugin-etc`](https://github.com/cartant/eslint-plugin-etc). It will effect a lint failure whenever it finds a type alias declaration that could be declared as an interface. The rule has a fixer — and a suggestion — and can replace type alias declarations automatically.
