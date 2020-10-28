@@ -22,11 +22,11 @@ const result = combine(["a", "b"], [1, 2]);
 
 The `combine` function will take elements from each of the input arrays that are passed — the caller can pass as many as is necessary — and will return an array containing the combined elements. (How they are combined doesn't matter; we're only interested in the types.)
 
-`combine` could be typed [like this](https://www.typescriptlang.org/play?#code/C4TwDgpgBAkgdmArsAzgHgKIBsIFsJyoB8UAvFAN4BQUUA2tngcFAJZxQDWEIA9gGZRG+QigC6ALigAnCAEMAJrzhYQQnCNQMNzMXTEBuKgF8jVBRADGWObKj9EcS8FbKol3rgBG7CJh2iUBAAHsAECigy8koqao6ccLwA7nD6RAAUNFAAdLnsSKhSdLnZ8AXowswoRGJUAJRSlaJ0cIjeENJ6hlRUHnAoLLIoiFgs5B7evul0AERyMwA0UDNeM2JLdACMSwBMYnUGQA):
+`combine` could be typed [like this](https://www.typescriptlang.org/play?#code/C4TwDgpgBAkgdmArsAzgHgKIBsIFsJyoB8UAvFAN4BQUUA2gNIQhQCWcUA1swPYBmUbHgKoAugC4oAJwgBDACY84WFkPyEUjZqLqiA3FQC+BqvIgBjLLJlQ+iOOeCslUcz1wAjdhEw51qKAgAD2ACeRRpOUVlFntOOB4AdzhdIgAKGigAOhz2JFRJOhys+Hz0NREUIlEqAEpJCo06OERPCCkdfSoqNzgUYEiURCwB8jdPbzS6ACJZaYAaKGmPadFFugBGRYAmUVq9IA):
 
 ```ts
 type Inputs<Elements> = {
-  [Element in keyof Elements]: readonly Elements[Element][];
+  [Key in keyof Elements]: readonly Elements[Key][];
 };
 
 declare function combine<Elements extends readonly unknown[]>(
@@ -43,9 +43,15 @@ type Mapped = Inputs<[string, number]>;
 
 And the element type of the returned array is obtained — from the `Elements` type parameter — using this mechanism:
 
-```ts
-type Zeroth = [string, number][0]; // string
-type All = [string, number][number]; // string | number
+```ts{7-8}
+type Element0 = [string, number][0];
+// string
+
+type Element1 = [string, number][1];
+// number
+
+type All = [string, number][number];
+// string | number
 ```
 
 With the signature declared like this, the return value's type is inferred correctly:
@@ -55,9 +61,9 @@ const result = combine(["a", "b"], [1, 2]);
 // (string | number)[]
 ```
 
-Let's say the `combine` function can also be passed a count to specify how many elements at a time should be taken from each array. We can add an overload signature [like this](https://www.typescriptlang.org/play?#code/C4TwDgpgBAkgdmArsAzgHgKIBsIFsJyoB8UAvFAN4BQUUA2tngcFAJZxQDWEIA9gGZRG+QigC6ALigAnCAEMAJrzhYQQnCNQMNzMXTEBuKgF8jVBRADGWObKj9EcS8FbKol3rgBG7CJh2iUBAAHsAECigy8koqao6ccLwA7nD6RAAUNFAAdLnsSKgAgnAKAMK8jsBSdLnZ8AXowswoRAA0UHCI3hDSYlQAlFJNonSd3b36RhbWttAOTi5uHt6+-kyBIWElkbKKyqpQ8YkpaZm0tfnIKNW19Vdrmi19g+rrWmNePXqGVFQecCgWLIUIgsCxyMsfHAIOk6AAiORw9pwrxwsTtOgARnaACZ0VAcf0DEA):
+Let's say the `combine` function can also be passed a count to specify how many elements at a time should be taken from each array. We can add an overload signature [like this](https://www.typescriptlang.org/play?#code/C4TwDgpgBAkgdmArsAzgHgKIBsIFsJyoB8UAvFAN4BQUUA2gNIQhQCWcUA1swPYBmUbHgKoAugC4oAJwgBDACY84WFkPyEUjZqLqiA3FQC+BqvIgBjLLJlQ+iOOeCslUcz1wAjdhEw51qKAgAD2ACeRRpOUVlFntOOB4AdzhdIgAKGigAOhz2JFQAQTh5AGEee2BJOhys+Hz0NREUIgAaKDhETwgpUSoASklGjToOrp7dAzNLa2g7BycXN09vX2ENQJCwiJkFJRUoOITk1IzaGrzkFCqausvV-2begcE-JpHOj26dfSoqNzgUMBIihEFggeQll44BA0nQAESyOFtOEeOGiNp0ACMbQATOioDi+nogA):
 
-```ts
+```ts{1-3}
 declare function combine<Elements extends readonly unknown[]>(
   ...inputsAndCount: [...Inputs<Elements>, number]
 ): Elements[number][];
@@ -73,9 +79,9 @@ const result = combine(["a", "b"], [1, 2], 2);
 // (string | number)[]
 ```
 
-Let's say we add [another overload signature](https://www.typescriptlang.org/play?#code/C4TwDgpgBAkgdmArsAzgHgKIBsIFsJyoB8UAvFAN4BQUUA2tngcFAJZxQDWEIA9gGZRG+QigC6ALigAnCAEMAJrzhYQQnCNQMNzMXTEBuKgF8jVBRADGWObKj9EcS8FbKol3rgBG7CJh2iUBAAHsAECigy8koqao6ccLwA7nD6RAAUNFAAdLnsSKgAgnAKAMK8jsDFCgAirNJSdLnZ8AXowswoRAA0UHCI3hDSvQBEOPzAI1AAPlAj0qwA5gAWk2JUAJRSHaJ0-YPSeobmVjZ2Dk4ubh7evv5MgSFhJZGyisqqUPGJKWmZtM18sgUNVypVGs1WsD7pour19l4hustuoHloEUj9EYLNZbNALs5XBwbj44H4dqggqFwq9oh84nAEslUmIMllAQhgRDclDUDDOkRkdsAuiBojDliqFQPHAUCxZChEFgWOQSb50nQRnIRqMvCMxL06ABGXoAJgNUFNowWK0mGwMQA) that allows the direction of the combination to be specified:
+Let's say we add [another overload signature](https://www.typescriptlang.org/play?#code/C4TwDgpgBAkgdmArsAzgHgKIBsIFsJyoB8UAvFAN4BQUUA2gNIQhQCWcUA1swPYBmUbHgKoAugC4oAJwgBDACY84WFkPyEUjZqLqiA3FQC+BqvIgBjLLJlQ+iOOeCslUcz1wAjdhEw51qKAgAD2ACeRRpOUVlFntOOB4AdzhdIgAKGigAOhz2JFQAQTh5AGEee2Ai+QARVilJOhys+Hz0NREUIgAaKDhETwgpHoAiHD5gYagAHyhhqVYAcwALCdEqAEpJdo06PoGpHX1TCysbOwcnFzdPb19hDUCQsIiZBSUVKDiE5NSM2ia8sgUFUyhUGk0WkC7v5Oj09h5BmtNoI-B1dv0EQddAYzJZrNBzo5nBxrl44D5tgFgqFii8ou9YnB4kkUqJ0pkAQggeCcpDUNCOkQkVtUTt4YjsVQqG44ChgJEUIgsPLyKTvGk6MNZMMRh5hqIenQAIw9ABMBqgppG82WE3WeiAA) that allows the direction of the combination to be specified:
 
-```ts
+```ts{1-3}
 declare function combine<Elements extends readonly unknown[]>(
   ...inputsAndCountAndDir: [...Inputs<Elements>, number, "left" | "right"]
 ): Elements[number][];
@@ -105,7 +111,7 @@ This doesn't make much sense. The only overload signature that should be matched
 
 It turns out that the order of the overload signatures is significant. It shouldn't be, but it is.
 
-If they are ordered [like this](https://www.typescriptlang.org/play?#code/C4TwDgpgBAkgdmArsAzgHgKIBsIFsJyoB8UAvFAN4BQUUA2tngcFAJZxQDWEIA9gGZRG+QigC6ALigAnCAEMAJrzhYQQnCNQMNzMXTEBuKgF8jVBRADGWObKj9EcS8FbKol3rgBG7CJh2iUBAAHsAECigy8koqao6ccLwA7nD6RAAUNFAAdLnsSKhSdLnZ8AXowswoRGJUAJRSlaJ0cIjeENJ6huZWNnYOTi5uHt6+-kyBIWFwEVGKyqpQ8YkpaZm0JfnIKACCMwDCvI7ARSVl2+Oa1QA0UK3tnfWNAVr3Xh1dRhbWttADzq4OCMfHA-E1UEFQuFIrJ5rElnAEslUmIMllNghtnsFIdjtiACKsaSnXLnVCXKpEW5vDq3ABEOH4wDpUAAPlA6dJWABzAAWzNqDXUE1ebXenX0Zg8cBQLFkKEQWBY5GBvnSdDpcjp9K8dLEdQMQA):
+If they are ordered [like this](https://www.typescriptlang.org/play?#code/C4TwDgpgBAkgdmArsAzgHgKIBsIFsJyoB8UAvFAN4BQUUA2gNIQhQCWcUA1swPYBmUbHgKoAugC4oAJwgBDACY84WFkPyEUjZqLqiA3FQC+BqvIgBjLLJlQ+iOOeCslUcz1wAjdhEw51qKAgAD2ACeRRpOUVlFntOOB4AdzhdIgAKGigAOhz2JFRJOhys+Hz0NREUIlEqAEpJCo06OERPCCkdfVMLKxs7BycXN09vX2ENQJCwiJkFJRUoOITk1IzaYrzkFABBOHkAYR57YELi0q2x-yqAGigWto66hr9K5taPds6DM0traH7HM4OMMvHAfI0AsFQnsZlF5rE4PEkilROlMhsEFtdgcjoRsQARVhSU45c6oS6VIi3e4fKS3ABEOD4wHpUAAPlB6VJWABzAAWLJq9UELyaNM+uhMbjgKGAkRQiCwcvIIO8aTo9Nk9IZHnpolqeiAA):
 
 ```ts
 declare function combine<Elements extends readonly unknown[]>(

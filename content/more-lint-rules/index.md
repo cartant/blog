@@ -42,7 +42,7 @@ return {
 and then obtain the corresponding TypeScript AST node via the `esTreeNodeToTSNodeMap` map that's provided by the [`@typescript-eslint/parser`](https://github.com/typescript-eslint/typescript-eslint/tree/daf649f6e7f63353a332a21b4fa79cb376de37eb/packages/parser):
 
 <!-- prettier-ignore -->
-```ts {1,5}
+```ts{1,5}
 const { esTreeNodeToTSNodeMap } = getParserServices(context);
 let usage: Map<ts.Identifier, tsutils.VariableInfo> | undefined;
 
