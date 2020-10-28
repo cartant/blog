@@ -34,7 +34,7 @@ declare function combine<Elements extends readonly unknown[]>(
 ): Elements[number][];
 ```
 
-Without going into too much detail, `Inputs` is mapped type that maps a tuple of element types to a tuple of read-only arrays — for the parameters — like this:
+Without going into too much detail, `Inputs` is mapped type that maps a tuple of element types to a tuple of read-only arrays — for the input array parameters — like this:
 
 ```ts
 type Mapped = Inputs<[string, number]>;
@@ -61,7 +61,7 @@ const result = combine(["a", "b"], [1, 2]);
 // (string | number)[]
 ```
 
-Let's say the `combine` function can also be passed a count to specify how many elements at a time should be taken from each array. We can add an overload signature [like this](https://www.typescriptlang.org/play?#code/C4TwDgpgBAkgdmArsAzgHgKIBsIFsJyoB8UAvFAN4BQUUA2gNIQhQCWcUA1swPYBmUbHgKoAugC4oAJwgBDACY84WFkPyEUjZqLqiA3FQC+BqvIgBjLLJlQ+iOOeCslUcz1wAjdhEw51qKAgAD2ACeRRpOUVlFntOOB4AdzhdIgAKGigAOhz2JFQAQTh5AGEee2BJOhys+Hz0NREUIgAaKDhETwgpUSoASklGjToOrp7dAzNLa2g7BycXN09vX2ENQJCwiJkFJRUoOITk1IzaGrzkFCqausvV-2begcE-JpHOj26dfSoqNzgUMBIihEFggeQll44BA0nQAESyOFtOEeOGiNp0ACMbQATOioDi+nogA):
+Let's say the `combine` function can also be passed a count to specify how many elements at a time should be taken from each input array. We can add an overload signature [like this](https://www.typescriptlang.org/play?#code/C4TwDgpgBAkgdmArsAzgHgKIBsIFsJyoB8UAvFAN4BQUUA2gNIQhQCWcUA1swPYBmUbHgKoAugC4oAJwgBDACY84WFkPyEUjZqLqiA3FQC+BqvIgBjLLJlQ+iOOeCslUcz1wAjdhEw51qKAgAD2ACeRRpOUVlFntOOB4AdzhdIgAKGigAOhz2JFQAQTh5AGEee2BJOhys+Hz0NREUIgAaKDhETwgpUSoASklGjToOrp7dAzNLa2g7BycXN09vX2ENQJCwiJkFJRUoOITk1IzaGrzkFCqausvV-2begcE-JpHOj26dfSoqNzgUMBIihEFggeQll44BA0nQAESyOFtOEeOGiNp0ACMbQATOioDi+nogA):
 
 ```ts{1-3}
 declare function combine<Elements extends readonly unknown[]>(
@@ -93,14 +93,14 @@ declare function combine<Elements extends readonly unknown[]>(
 ): Elements[number][];
 ```
 
-With these signatures, the return value's type is still inferred correctly for this usage:
+With these signatures, the return value's type is inferred correctly for this usage:
 
 ```ts
 const result = combine(["a", "b"], [1, 2], 2, "right");
 // (string | number)[]
 ```
 
-However, there is a problem. If `combine` is passed only a single input, the return value's type is not inferred correctly:
+However, there is a problem. If `combine` is passed only a single input array, the return value's type is not inferred correctly:
 
 ```ts
 const result = combine(["a", "b"]);
