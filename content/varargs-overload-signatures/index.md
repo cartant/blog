@@ -22,14 +22,14 @@ const result = combine(["a", "b"], [1, 2]);
 
 The `combine` function will take elements from each of the input arrays that are passed — the caller can pass as many as is necessary — and will return an array containing the combined elements. (How they are combined doesn't matter; we're only interested in the types.)
 
-`combine` could be typed [like this](https://www.typescriptlang.org/play?#code/C4TwDgpgBAkgdmArsAzgHgKIBsIFsJyoB8UAvFAN4BQUUA2gNIQhQCWcUA1swPYBmUbHgKoAugC4oAJwgBDACY84WFkPyEUjZqLqiA3FQC+BqvIgBjLLJlQ+iOOeCslUcz1wAjdhEw51qKAgAD2ACeRRpOUVlFntOOB4AdzhdIgAKGigAOhz2JFRJOhys+Hz0NREUIlEqAEpJCo06OERPCCkdfSoqNzgUYEiURCwB8jdPbzS6ACJZaYAaKGmPadFFugBGRYAmUVq9IA):
+`combine` could be typed [like this](https://www.typescriptlang.org/play?#code/C4TwDgpgBAkgdmArsAzgHgKIBsIFsJyoB8UAvFAN4BQUUA2gNIQhQCWcUA1swPYBmUbHgKoAugC4oAJwgBDACY84WFkPyEUjZqLqiA3FQC+BqvIgBjLLJlQ+iOOeCslUcz1wAjdhEw51qKAgAD2ACeRQoe044HgB3OF0iAAoaKAA6DPYkVEk6DLT4bPQ1ERQiUSoASkkSjTo4RE8IKR19Kio3OBRgaQgURCwe8jdPbyS6ACJZCYAaKAmPCdE5ugBGOYAmUUq9IA):
 
 ```ts
 type Inputs<Elements> = {
   [Key in keyof Elements]: readonly Elements[Key][];
 };
 
-declare function combine<Elements extends readonly unknown[]>(
+declare function combine<Elements extends unknown[]>(
   ...inputs: [...Inputs<Elements>]
 ): Elements[number][];
 ```
@@ -61,13 +61,13 @@ const result = combine(["a", "b"], [1, 2]);
 // (string | number)[]
 ```
 
-Let's say the `combine` function can also be passed a count to specify how many elements at a time should be taken from each input array. We can add an overload signature [like this](https://www.typescriptlang.org/play?#code/C4TwDgpgBAkgdmArsAzgHgKIBsIFsJyoB8UAvFAN4BQUUA2gNIQhQCWcUA1swPYBmUbHgKoAugC4oAJwgBDACY84WFkPyEUjZqLqiA3FQC+BqvIgBjLLJlQ+iOOeCslUcz1wAjdhEw51qKAgAD2ACeRRpOUVlFntOOB4AdzhdIgAKGigAOhz2JFQAQTh5AGEee2BJOhys+Hz0NREUIgAaKDhETwgpUSoASklGjToOrp7dAzNLa2g7BycXN09vX2ENQJCwiJkFJRUoOITk1IzaGrzkFCqausvV-2begcE-JpHOj26dfSoqNzgUMBIihEFggeQll44BA0nQAESyOFtOEeOGiNp0ACMbQATOioDi+nogA):
+Let's say the `combine` function can also be passed a count to specify how many elements at a time should be taken from each input array. We can add an overload signature [like this](https://www.typescriptlang.org/play?#code/C4TwDgpgBAkgdmArsAzgHgKIBsIFsJyoB8UAvFAN4BQUUA2gNIQhQCWcUA1swPYBmUbHgKoAugC4oAJwgBDACY84WFkPyEUjZqLqiA3FQC+BqvIgBjLLJlQ+iOOeCslUcz1wAjdhEw51qKAgAD2ACeRQoe044HgB3OF0iAAoaKAA6DPYkVABBOHkAYR57YEk6DLT4bPQ1ERQiABooOERPCClRKgBKSVqNOha2jt0DM0traDsHJxc3T29fYQ1AkLCIqJj4xJTaCqzkFDKKqoPF-3rOnsE-OoHWj3adfSoqNzgUYGkIFEQsT-I5l44BAknQAESyMFNMEeMGiJp0ACMTQATPCoCiunogA):
 
 ```ts{1-3}
-declare function combine<Elements extends readonly unknown[]>(
+declare function combine<Elements extends unknown[]>(
   ...inputsAndCount: [...Inputs<Elements>, number]
 ): Elements[number][];
-declare function combine<Elements extends readonly unknown[]>(
+declare function combine<Elements extends unknown[]>(
   ...inputs: [...Inputs<Elements>]
 ): Elements[number][];
 ```
@@ -79,16 +79,16 @@ const result = combine(["a", "b"], [1, 2], 2);
 // (string | number)[]
 ```
 
-Let's say we add [another overload signature](https://www.typescriptlang.org/play?#code/C4TwDgpgBAkgdmArsAzgHgKIBsIFsJyoB8UAvFAN4BQUUA2gNIQhQCWcUA1swPYBmUbHgKoAugC4oAJwgBDACY84WFkPyEUjZqLqiA3FQC+BqvIgBjLLJlQ+iOOeCslUcz1wAjdhEw51qKAgAD2ACeRRpOUVlFntOOB4AdzhdIgAKGigAOhz2JFQAQTh5AGEee2Ai+QARVilJOhys+Hz0NREUIgAaKDhETwgpHoAiHD5gYagAHyhhqVYAcwALCdEqAEpJdo06PoGpHX1TCysbOwcnFzdPb19hDUCQsIiZBSUVKDiE5NSM2ia8sgUFUyhUGk0WkC7v5Oj09h5BmtNoI-B1dv0EQddAYzJZrNBzo5nBxrl44D5tgFgqFii8ou9YnB4kkUqJ0pkAQggeCcpDUNCOkQkVtUTt4YjsVQqG44ChgJEUIgsPLyKTvGk6MNZMMRh5hqIenQAIw9ABMBqgppG82WE3WeiAA) that allows the direction of the combination to be specified:
+Let's say we add [another overload signature](https://www.typescriptlang.org/play?#code/C4TwDgpgBAkgdmArsAzgHgKIBsIFsJyoB8UAvFAN4BQUUA2gNIQhQCWcUA1swPYBmUbHgKoAugC4oAJwgBDACY84WFkPyEUjZqLqiA3FQC+BqvIgBjLLJlQ+iOOeCslUcz1wAjdhEw51qKAgAD2ACeRQoe044HgB3OF0iAAoaKAA6DPYkVABBOHkAYR57YDz5ABFWKUk6DLT4bPQ1ERQiABooOERPCCkOgCIcPmB+qAAfKH6pVgBzAAsR0SoASklmjTounqkdfVMLKxs7BycXN09vX2ENQJCwiKiY+MSU2jqs5BQyopKauobPld-K0OlsPL0lqtBH4WptuuCdroDGZLNZoMdHM4OOcvHAfOsAsFQvkHnBonEEqJkql3ghPn8MgDUECWkRIWsYRswRCkVQqG44ChgNIIChEFhheQcd4knR+rJ+gMPP1RB06ABGDoAJlVUC1A2m8xGyz0QA) that allows the direction of the combination to be specified:
 
 ```ts{1-3}
-declare function combine<Elements extends readonly unknown[]>(
+declare function combine<Elements extends unknown[]>(
   ...inputsAndCountAndDir: [...Inputs<Elements>, number, "left" | "right"]
 ): Elements[number][];
-declare function combine<Elements extends readonly unknown[]>(
+declare function combine<Elements extends unknown[]>(
   ...inputsAndCount: [...Inputs<Elements>, number]
 ): Elements[number][];
-declare function combine<Elements extends readonly unknown[]>(
+declare function combine<Elements extends unknown[]>(
   ...inputs: [...Inputs<Elements>]
 ): Elements[number][];
 ```
@@ -111,16 +111,16 @@ This doesn't make much sense. The only overload signature that should be matched
 
 It turns out that the order of the overload signatures is significant. It shouldn't be, but it is.
 
-If they are ordered [like this](https://www.typescriptlang.org/play?#code/C4TwDgpgBAkgdmArsAzgHgKIBsIFsJyoB8UAvFAN4BQUUA2gNIQhQCWcUA1swPYBmUbHgKoAugC4oAJwgBDACY84WFkPyEUjZqLqiA3FQC+BqvIgBjLLJlQ+iOOeCslUcz1wAjdhEw51qKAgAD2ACeRRpOUVlFntOOB4AdzhdIgAKGigAOhz2JFRJOhys+Hz0NREUIlEqAEpJCo06OERPCCkdfVMLKxs7BycXN09vX2ENQJCwiJkFJRUoOITk1IzaYrzkFABBOHkAYR57YELi0q2x-yqAGigWto66hr9K5taPds6DM0traH7HM4OMMvHAfI0AsFQnsZlF5rE4PEkilROlMhsEFtdgcjoRsQARVhSU45c6oS6VIi3e4fKS3ABEOD4wHpUAAPlB6VJWABzAAWLJq9UELyaNM+uhMbjgKGAkRQiCwcvIIO8aTo9Nk9IZHnpolqeiAA):
+If they are ordered [like this](https://www.typescriptlang.org/play?#code/C4TwDgpgBAkgdmArsAzgHgKIBsIFsJyoB8UAvFAN4BQUUA2gNIQhQCWcUA1swPYBmUbHgKoAugC4oAJwgBDACY84WFkPyEUjZqLqiA3FQC+BqvIgBjLLJlQ+iOOeCslUcz1wAjdhEw51qKAgAD2ACeRQoe044HgB3OF0iAAoaKAA6DPYkVEk6DLT4bPQ1ERQiUSoASkkSjTo4RE8IKR19UwsrGzsHJxc3T29fYQ1AkLCIqJj4xJTafKzkFABBOHkAYR57YFz8wsWh-zKAGigGppaqmr9S+saPZtaDM0traG7HZw5+rzgfWoDgqFVhM4NE4glRMlUvMEIsVutNoR4QARVhSHYZPaoA6lIgnM73KQnABEOD4wGJUAAPlBiVJWABzAAWFIq1UE1zqBIeuhMbjgKGA0ggKEQWCF5G+3iSdGJsmJJI8xNElT0QA):
 
 ```ts
-declare function combine<Elements extends readonly unknown[]>(
+declare function combine<Elements extends unknown[]>(
   ...inputs: [...Inputs<Elements>]
 ): Elements[number][];
-declare function combine<Elements extends readonly unknown[]>(
+declare function combine<Elements extends unknown[]>(
   ...inputsAndCount: [...Inputs<Elements>, number]
 ): Elements[number][];
-declare function combine<Elements extends readonly unknown[]>(
+declare function combine<Elements extends unknown[]>(
   ...inputsAndCountAndDir: [...Inputs<Elements>, number, "left" | "right"]
 ): Elements[number][];
 ```

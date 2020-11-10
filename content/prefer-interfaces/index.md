@@ -84,3 +84,7 @@ The performance problems mentioned in Rob's thread suggest that perhaps interfac
 > We tried for a long time to paper over the distinction because of people's personal choices, but ultimately unless we actually simplify the types internally (could happen) they're not really the same, and interfaces behave better.
 
 For developers interested in ensuring that interfaces are used wherever possible, I've added a [`prefer-interface` ESLint rule](https://github.com/cartant/eslint-plugin-etc/blob/5c2646a397dc2e174b23587af4daa9f1f9047d5f/docs/rules/prefer-interface.md) to [`eslint-plugin-etc`](https://github.com/cartant/eslint-plugin-etc). It will effect a lint failure whenever it finds a type alias declaration that could be declared as an interface. The rule has a fixer — and a suggestion — and can replace type alias declarations automatically.
+
+---
+
+_For more information, check out this blog post that Rob has written, in which he talks about this issue and a whole lot more: [10 Insights from Adopting TypeScript at Scale](https://www.techatbloomberg.com/blog/10-insights-adopting-typescript-at-scale/)_
