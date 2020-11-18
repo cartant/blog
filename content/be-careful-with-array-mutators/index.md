@@ -82,7 +82,7 @@ If the call is a statement, the return value isn’t used — so there is no
 
 If the call is not a statement, the rule determines whether or not the array upon which the call is made is transient and effects a rule failure if it isn’t.
 
-There are several methods on `Array.prototype` that mutate the array and return a reference to the mutated array — `fill`, `reverse`, `sort`, and `splice` — and the rule is enforced for all of them.
+There are several methods on `Array.prototype` that mutate the array and return a reference to the mutated array — `fill`, `reverse` and `sort` — and the rule is enforced for all of them.
 
 ## The future
 

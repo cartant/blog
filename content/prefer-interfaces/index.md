@@ -87,4 +87,4 @@ For developers interested in ensuring that interfaces are used wherever possible
 
 ---
 
-_For more information, check out this blog post that Rob has written, in which he talks about this issue and a whole lot more: [10 Insights from Adopting TypeScript at Scale](https://www.techatbloomberg.com/blog/10-insights-adopting-typescript-at-scale/)_
+_Rob has written about the types/interfaces issue — and a whole lot more — in his blog post: [10 Insights from Adopting TypeScript at Scale](https://www.techatbloomberg.com/blog/10-insights-adopting-typescript-at-scale/)_
