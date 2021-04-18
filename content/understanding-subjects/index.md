@@ -177,14 +177,14 @@ There is no single-subscriber analogy for the `ReplaySubject`, as the concept of
 
 ## So how do you use these subjects?
 
-Now that we’ve seen what the various subjects do and why they are necessary, how should they be used? Well, it’s quite likely that the only subject class you will ever need to use will be a `Subject`.
+Now that we’ve seen what the various subjects do and why they are necessary, how should they be used? Well, it’s quite likely that the only subject classes you will ever need to use will be `Subject` and `BehaviorSubject`.
 
-A `Subject` works just fine for connecting an observer to an observable. And for the multicasting situations, there is an alternative.
+A `Subject` works just fine for connecting an observer to an observable and a `BehaviorSubject` is well-suited for representing an atom of state. And for multicasting situations, there are alternatives to using a subject.
 
 RxJS contains multicasting operators that use the various subject classes and in the same way that I favour using RxJS observable creators (like `fromEvent`) over calls to `Observable.create`, for multicasting situations I favour using RxJS operators over explicit subjects:
 
 - `publish` or `share` can be used instead of a `Subject`;
-- `publishBehaviour` can be used instead of a `BehaviorSubject`;
+- `publishBehavior` can be used instead of a `BehaviorSubject`;
 - `publishLast` can be used instead of an `AsyncSubject`; and
 - `publishReplay` or `shareReplay` can be used instead of a `ReplaySubject`.
 
