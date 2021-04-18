@@ -4,7 +4,7 @@
     "url": "https://github.com/cartant/blog/issues"
   },
   "dependencies": {
-    "husky": "^4.0.0",
+    "husky": "^6.0.0",
     "lint-staged": "^10.0.8",
     "prettier": "^2.0.0",
     "remark-cli": "^7.0.1",
@@ -14,11 +14,6 @@
   "description": "Personal blog posts",
   "devDependencies": {},
   "homepage": "https://ncjamieson.com",
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "keywords": [],
   "license": "All Rights Reserved",
   "lint-staged": {
@@ -34,7 +29,8 @@
   },
   "scripts": {
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
-    "lint": "prettier --check \"**/*.{js,jsx,json,md}\" && remark \"content/**/*.md\""
+    "lint": "prettier --check \"**/*.{js,jsx,json,md}\" && remark \"content/**/*.md\"",
+    "prepare": "husky install"
   },
   "version": "0.0.0"
 }
