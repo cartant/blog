@@ -120,7 +120,7 @@ The [`get` handler's invariants](https://developer.mozilla.org/en-US/docs/Web/Ja
 
 > The value reported for a property must be the same as the value of the corresponding target object property if the target object property is a non-writable, non-configurable own data property.
 >
-> The value reported for a property must be `undefined` if the corresponding target object property is a non-configurable own accessor property that has undefined as its `[[Get]]` attribute.
+> The value reported for a property must be undefined if the corresponding target object property is a non-configurable own accessor property that has undefined as its [[Get]] attribute.
 
 This is something that I'd run into before, but had forgotten. It's a small comfort, though, to know that there are limits on the havoc that can be wreaked with proxies.
 
@@ -181,7 +181,7 @@ module.exports = {
 };
 ```
 
-Once that's done the rule works:
+Once that's done, the rule works:
 
 - When the base rule accesses the `options` property, it finds the property on `contextForBaseRule` — which overrides the `options` property on `context`.
 - When the base rule calls the `report` method, it finds the method on `context` — which is the prototype for `contextForBaseRule`.

@@ -10,6 +10,10 @@ cardImage: "./title-card.jpeg"
 
 ![Stripes](title.jpeg "Photo by Markus Spiske on Unsplash")
 
+_Some time after this blog post was written, Anders Hejlsberg opened a PR that [preserves type aliases for union and intersection types](https://github.com/microsoft/TypeScript/pull/42149). That PR's changes should included in TypeScript 4.2, so when that version is released, the reasons for preferring interfaces might be less compelling._
+
+---
+
 Last week, I noticed [a Twitter thread](https://twitter.com/robpalmer2/status/1319188885197422594) from [Rob Palmer](https://twitter.com/robpalmer2) in which he described some performance problems that were caused by the use of [type alias declarations](https://www.typescriptlang.org/docs/handbook/advanced-types.html#interfaces-vs-type-aliases) in TypeScript.
 
 Specifically, the use of a type alias declaration effected a much larger `.d.ts` output:
@@ -88,3 +92,5 @@ For developers interested in ensuring that interfaces are used wherever possible
 ---
 
 _Rob has written about the types/interfaces issue — and a whole lot more — in his blog post: [10 Insights from Adopting TypeScript at Scale](https://www.techatbloomberg.com/blog/10-insights-adopting-typescript-at-scale/)_
+
+_And, in the TypeScript documentation, Daniel gives some reasons for [preferring interfaces over intersections](https://github.com/microsoft/TypeScript/wiki/Performance#preferring-interfaces-over-intersections)._
